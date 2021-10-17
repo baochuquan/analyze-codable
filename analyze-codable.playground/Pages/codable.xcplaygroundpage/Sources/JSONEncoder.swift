@@ -16,6 +16,9 @@
 /// runtime when running on i386 simulator. The issue is tracked in https://bugs.swift.org/browse/SR-8276
 /// Making the protocol `internal` instead of `private` works around this issue.
 /// Once SR-8276 is fixed, this check can be removed and the protocol always be made private.
+
+import Foundation
+
 #if arch(i386) || arch(arm)
 internal protocol _JSONStringDictionaryEncodableMarker { }
 #else
@@ -154,7 +157,7 @@ open class JSONEncoder {
         /// If the result of the conversion is a duplicate key, then only one value will be present in the result.
         case custom((_ codingPath: [CodingKey]) -> CodingKey)
 
-        fileprivate static func _convertToSnakeCase(_ stringKey: String) -> String {
+        static func _convertToSnakeCase(_ stringKey: String) -> String {
             guard !stringKey.isEmpty else { return stringKey }
 
             var words : [Range<String.Index>] = []

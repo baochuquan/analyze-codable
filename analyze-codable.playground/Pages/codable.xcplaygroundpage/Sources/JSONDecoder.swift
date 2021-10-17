@@ -87,7 +87,7 @@ open class JSONDecoder {
         /// If the result of the conversion is a duplicate key, then only one value will be present in the container for the type to decode from.
         case custom((_ codingPath: [CodingKey]) -> CodingKey)
 
-        fileprivate static func _convertFromSnakeCase(_ stringKey: String) -> String {
+        static func _convertFromSnakeCase(_ stringKey: String) -> String {
             guard !stringKey.isEmpty else { return stringKey }
 
             // Find the first non-underscore character
@@ -149,7 +149,7 @@ open class JSONDecoder {
     open var userInfo: [CodingUserInfoKey : Any] = [:]
 
     /// Options set on the top-level encoder to pass down the decoding hierarchy.
-    fileprivate struct _Options {
+    struct _Options {
         let dateDecodingStrategy: DateDecodingStrategy
         let dataDecodingStrategy: DataDecodingStrategy
         let nonConformingFloatDecodingStrategy: NonConformingFloatDecodingStrategy
@@ -158,7 +158,7 @@ open class JSONDecoder {
     }
 
     /// The options set on the top-level decoder.
-    fileprivate var options: _Options {
+    var options: _Options {
         return _Options(dateDecodingStrategy: dateDecodingStrategy,
                         dataDecodingStrategy: dataDecodingStrategy,
                         nonConformingFloatDecodingStrategy: nonConformingFloatDecodingStrategy,
@@ -208,7 +208,7 @@ class __JSONDecoder : Decoder {
     let options: JSONDecoder._Options
 
     /// The path to the current point in encoding.
-    fileprivate(set) public var codingPath: [CodingKey]
+    public var codingPath: [CodingKey]
 
     /// Contextual user-provided information for use during encoding.
     public var userInfo: [CodingUserInfoKey : Any] {
