@@ -1,0 +1,1852 @@
+sil_stage canonical
+
+import Builtin
+import Swift
+import SwiftShims
+
+import Foundation
+
+struct Address : Decodable & Encodable {
+  @_hasStorage var province: String { get set }
+  @_hasStorage var city: String { get set }
+  init(province: String, city: String)
+  enum CodingKeys : CodingKey {
+    case province
+    case city
+    @_implements(Equatable, ==(_:_:)) static func __derived_enum_equals(_ a: Address.CodingKeys, _ b: Address.CodingKeys) -> Bool
+    var hashValue: Int { get }
+    func hash(into hasher: inout Hasher)
+    var stringValue: String { get }
+    init?(stringValue: String)
+    var intValue: Int? { get }
+    init?(intValue: Int)
+  }
+  init(from decoder: Decoder) throws
+  func encode(to encoder: Encoder) throws
+}
+
+struct Student : Decodable & Encodable {
+  @_hasStorage var name: String { get set }
+  @_hasStorage var age: Int { get set }
+  @_hasStorage var address: Address { get set }
+  enum CodingKeys : String, CodingKey {
+    case name
+    case age
+    case address
+    typealias RawValue = String
+    init?(rawValue: String)
+    var rawValue: String { get }
+    var stringValue: String { get }
+    init?(stringValue: String)
+    var intValue: Int? { get }
+    init?(intValue: Int)
+  }
+  init(name: String, age: Int, address: Address)
+  init(from decoder: Decoder) throws
+  func encode(to encoder: Encoder) throws
+}
+
+// main
+sil @main : $@convention(c) (Int32, UnsafeMutablePointer<Optional<UnsafeMutablePointer<Int8>>>) -> Int32 {
+bb0(%0 : $Int32, %1 : $UnsafeMutablePointer<Optional<UnsafeMutablePointer<Int8>>>):
+  %2 = integer_literal $Builtin.Int32, 0          // user: %3
+  %3 = struct $Int32 (%2 : $Builtin.Int32)        // user: %4
+  return %3 : $Int32                              // id: %4
+} // end sil function 'main'
+
+// Address.province.getter
+sil hidden [transparent] @$s7Student7AddressV8provinceSSvg : $@convention(method) (@guaranteed Address) -> @owned String {
+// %0 "self"                                      // users: %2, %1
+bb0(%0 : $Address):
+  debug_value %0 : $Address, let, name "self", argno 1 // id: %1
+  %2 = struct_extract %0 : $Address, #Address.province // users: %4, %3
+  retain_value %2 : $String                       // id: %3
+  return %2 : $String                             // id: %4
+} // end sil function '$s7Student7AddressV8provinceSSvg'
+
+// Address.province.setter
+sil hidden [transparent] @$s7Student7AddressV8provinceSSvs : $@convention(method) (@owned String, @inout Address) -> () {
+// %0 "value"                                     // users: %11, %8, %4, %2
+// %1 "self"                                      // users: %5, %3
+bb0(%0 : $String, %1 : $*Address):
+  debug_value %0 : $String, let, name "value", argno 1 // id: %2
+  debug_value_addr %1 : $*Address, var, name "self", argno 2 // id: %3
+  retain_value %0 : $String                       // id: %4
+  %5 = begin_access [modify] [static] %1 : $*Address // users: %10, %6
+  %6 = struct_element_addr %5 : $*Address, #Address.province // users: %8, %7
+  %7 = load %6 : $*String                         // user: %9
+  store %0 to %6 : $*String                       // id: %8
+  release_value %7 : $String                      // id: %9
+  end_access %5 : $*Address                       // id: %10
+  release_value %0 : $String                      // id: %11
+  %12 = tuple ()                                  // user: %13
+  return %12 : $()                                // id: %13
+} // end sil function '$s7Student7AddressV8provinceSSvs'
+
+// Address.province.modify
+sil hidden [transparent] @$s7Student7AddressV8provinceSSvM : $@yield_once @convention(method) (@inout Address) -> @yields @inout String {
+// %0 "self"                                      // users: %2, %1
+bb0(%0 : $*Address):
+  debug_value_addr %0 : $*Address, var, name "self", argno 1 // id: %1
+  %2 = begin_access [modify] [static] %0 : $*Address // users: %5, %8, %3
+  %3 = struct_element_addr %2 : $*Address, #Address.province // user: %4
+  yield %3 : $*String, resume bb1, unwind bb2     // id: %4
+
+bb1:                                              // Preds: bb0
+  end_access %2 : $*Address                       // id: %5
+  %6 = tuple ()                                   // user: %7
+  return %6 : $()                                 // id: %7
+
+bb2:                                              // Preds: bb0
+  end_access %2 : $*Address                       // id: %8
+  unwind                                          // id: %9
+} // end sil function '$s7Student7AddressV8provinceSSvM'
+
+// Address.city.getter
+sil hidden [transparent] @$s7Student7AddressV4citySSvg : $@convention(method) (@guaranteed Address) -> @owned String {
+// %0 "self"                                      // users: %2, %1
+bb0(%0 : $Address):
+  debug_value %0 : $Address, let, name "self", argno 1 // id: %1
+  %2 = struct_extract %0 : $Address, #Address.city // users: %4, %3
+  retain_value %2 : $String                       // id: %3
+  return %2 : $String                             // id: %4
+} // end sil function '$s7Student7AddressV4citySSvg'
+
+// Address.city.setter
+sil hidden [transparent] @$s7Student7AddressV4citySSvs : $@convention(method) (@owned String, @inout Address) -> () {
+// %0 "value"                                     // users: %11, %8, %4, %2
+// %1 "self"                                      // users: %5, %3
+bb0(%0 : $String, %1 : $*Address):
+  debug_value %0 : $String, let, name "value", argno 1 // id: %2
+  debug_value_addr %1 : $*Address, var, name "self", argno 2 // id: %3
+  retain_value %0 : $String                       // id: %4
+  %5 = begin_access [modify] [static] %1 : $*Address // users: %10, %6
+  %6 = struct_element_addr %5 : $*Address, #Address.city // users: %8, %7
+  %7 = load %6 : $*String                         // user: %9
+  store %0 to %6 : $*String                       // id: %8
+  release_value %7 : $String                      // id: %9
+  end_access %5 : $*Address                       // id: %10
+  release_value %0 : $String                      // id: %11
+  %12 = tuple ()                                  // user: %13
+  return %12 : $()                                // id: %13
+} // end sil function '$s7Student7AddressV4citySSvs'
+
+// Address.city.modify
+sil hidden [transparent] @$s7Student7AddressV4citySSvM : $@yield_once @convention(method) (@inout Address) -> @yields @inout String {
+// %0 "self"                                      // users: %2, %1
+bb0(%0 : $*Address):
+  debug_value_addr %0 : $*Address, var, name "self", argno 1 // id: %1
+  %2 = begin_access [modify] [static] %0 : $*Address // users: %5, %8, %3
+  %3 = struct_element_addr %2 : $*Address, #Address.city // user: %4
+  yield %3 : $*String, resume bb1, unwind bb2     // id: %4
+
+bb1:                                              // Preds: bb0
+  end_access %2 : $*Address                       // id: %5
+  %6 = tuple ()                                   // user: %7
+  return %6 : $()                                 // id: %7
+
+bb2:                                              // Preds: bb0
+  end_access %2 : $*Address                       // id: %8
+  unwind                                          // id: %9
+} // end sil function '$s7Student7AddressV4citySSvM'
+
+// Address.init(province:city:)
+sil hidden @$s7Student7AddressV8province4cityACSS_SStcfC : $@convention(method) (@owned String, @owned String, @thin Address.Type) -> @owned Address {
+// %0 "$implicit_value"                           // user: %3
+// %1 "$implicit_value"                           // user: %3
+// %2 "$metatype"
+bb0(%0 : $String, %1 : $String, %2 : $@thin Address.Type):
+  %3 = struct $Address (%0 : $String, %1 : $String) // user: %4
+  return %3 : $Address                            // id: %4
+} // end sil function '$s7Student7AddressV8province4cityACSS_SStcfC'
+
+// static Address.CodingKeys.__derived_enum_equals(_:_:)
+sil private @$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLO21__derived_enum_equalsySbAF_AFtFZ : $@convention(method) (Address.CodingKeys, Address.CodingKeys, @thin Address.CodingKeys.Type) -> Bool {
+// %0 "a"                                         // users: %7, %3
+// %1 "b"                                         // users: %21, %4
+// %2 "self"                                      // user: %5
+bb0(%0 : $Address.CodingKeys, %1 : $Address.CodingKeys, %2 : $@thin Address.CodingKeys.Type):
+  debug_value %0 : $Address.CodingKeys, let, name "a", argno 1 // id: %3
+  debug_value %1 : $Address.CodingKeys, let, name "b", argno 2 // id: %4
+  debug_value %2 : $@thin Address.CodingKeys.Type, let, name "self", argno 3 // id: %5
+  %6 = alloc_stack $Int, var, name "index_a"      // users: %34, %16, %10, %41
+  switch_enum %0 : $Address.CodingKeys, case #Address.CodingKeys.province!enumelt: bb1, case #Address.CodingKeys.city!enumelt: bb2 // id: %7
+
+bb1:                                              // Preds: bb0
+  %8 = integer_literal $Builtin.Int64, 0          // user: %9
+  %9 = struct $Int (%8 : $Builtin.Int64)          // user: %11
+  %10 = begin_access [modify] [static] %6 : $*Int // users: %11, %12
+  store %9 to %10 : $*Int                         // id: %11
+  end_access %10 : $*Int                          // id: %12
+  br bb3                                          // id: %13
+
+bb2:                                              // Preds: bb0
+  %14 = integer_literal $Builtin.Int64, 1         // user: %15
+  %15 = struct $Int (%14 : $Builtin.Int64)        // user: %17
+  %16 = begin_access [modify] [static] %6 : $*Int // users: %17, %18
+  store %15 to %16 : $*Int                        // id: %17
+  end_access %16 : $*Int                          // id: %18
+  br bb3                                          // id: %19
+
+bb3:                                              // Preds: bb2 bb1
+  %20 = alloc_stack $Int, var, name "index_b"     // users: %35, %30, %24, %40
+  switch_enum %1 : $Address.CodingKeys, case #Address.CodingKeys.province!enumelt: bb4, case #Address.CodingKeys.city!enumelt: bb5 // id: %21
+
+bb4:                                              // Preds: bb3
+  %22 = integer_literal $Builtin.Int64, 0         // user: %23
+  %23 = struct $Int (%22 : $Builtin.Int64)        // user: %25
+  %24 = begin_access [modify] [static] %20 : $*Int // users: %25, %26
+  store %23 to %24 : $*Int                        // id: %25
+  end_access %24 : $*Int                          // id: %26
+  br bb6                                          // id: %27
+
+bb5:                                              // Preds: bb3
+  %28 = integer_literal $Builtin.Int64, 1         // user: %29
+  %29 = struct $Int (%28 : $Builtin.Int64)        // user: %31
+  %30 = begin_access [modify] [static] %20 : $*Int // users: %31, %32
+  store %29 to %30 : $*Int                        // id: %31
+  end_access %30 : $*Int                          // id: %32
+  br bb6                                          // id: %33
+
+bb6:                                              // Preds: bb5 bb4
+  %34 = load %6 : $*Int                           // user: %36
+  %35 = load %20 : $*Int                          // user: %37
+  %36 = struct_extract %34 : $Int, #Int._value    // user: %38
+  %37 = struct_extract %35 : $Int, #Int._value    // user: %38
+  %38 = builtin "cmp_eq_Int64"(%36 : $Builtin.Int64, %37 : $Builtin.Int64) : $Builtin.Int1 // user: %39
+  %39 = struct $Bool (%38 : $Builtin.Int1)        // user: %42
+  dealloc_stack %20 : $*Int                       // id: %40
+  dealloc_stack %6 : $*Int                        // id: %41
+  return %39 : $Bool                              // id: %42
+} // end sil function '$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLO21__derived_enum_equalsySbAF_AFtFZ'
+
+// Address.CodingKeys.hashValue.getter
+sil private @$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLO9hashValueSivg : $@convention(method) (Address.CodingKeys) -> Int {
+// %0 "self"                                      // users: %3, %1
+bb0(%0 : $Address.CodingKeys):
+  debug_value %0 : $Address.CodingKeys, let, name "self", argno 1 // id: %1
+  %2 = alloc_stack $Address.CodingKeys            // users: %3, %6, %5
+  store %0 to %2 : $*Address.CodingKeys           // id: %3
+  // function_ref _hashValue<A>(for:)
+  %4 = function_ref @$ss10_hashValue3forSix_tSHRzlF : $@convention(thin) <τ_0_0 where τ_0_0 : Hashable> (@in_guaranteed τ_0_0) -> Int // user: %5
+  %5 = apply %4<Address.CodingKeys>(%2) : $@convention(thin) <τ_0_0 where τ_0_0 : Hashable> (@in_guaranteed τ_0_0) -> Int // user: %7
+  dealloc_stack %2 : $*Address.CodingKeys         // id: %6
+  return %5 : $Int                                // id: %7
+} // end sil function '$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLO9hashValueSivg'
+
+// Address.CodingKeys.hash(into:)
+sil private @$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLO4hash4intoys6HasherVz_tF : $@convention(method) (@inout Hasher, Address.CodingKeys) -> () {
+// %0 "hasher"                                    // users: %23, %2
+// %1 "self"                                      // users: %5, %3
+bb0(%0 : $*Hasher, %1 : $Address.CodingKeys):
+  debug_value_addr %0 : $*Hasher, var, name "hasher", argno 1 // id: %2
+  debug_value %1 : $Address.CodingKeys, let, name "self", argno 2 // id: %3
+  %4 = alloc_stack $Int, var, name "discriminator" // users: %18, %14, %8, %28
+  switch_enum %1 : $Address.CodingKeys, case #Address.CodingKeys.province!enumelt: bb1, case #Address.CodingKeys.city!enumelt: bb2 // id: %5
+
+bb1:                                              // Preds: bb0
+  %6 = integer_literal $Builtin.Int64, 0          // user: %7
+  %7 = struct $Int (%6 : $Builtin.Int64)          // user: %9
+  %8 = begin_access [modify] [static] %4 : $*Int  // users: %9, %10
+  store %7 to %8 : $*Int                          // id: %9
+  end_access %8 : $*Int                           // id: %10
+  br bb3                                          // id: %11
+
+bb2:                                              // Preds: bb0
+  %12 = integer_literal $Builtin.Int64, 1         // user: %13
+  %13 = struct $Int (%12 : $Builtin.Int64)        // user: %15
+  %14 = begin_access [modify] [static] %4 : $*Int // users: %15, %16
+  store %13 to %14 : $*Int                        // id: %15
+  end_access %14 : $*Int                          // id: %16
+  br bb3                                          // id: %17
+
+bb3:                                              // Preds: bb2 bb1
+  %18 = begin_access [read] [static] %4 : $*Int   // users: %19, %20
+  %19 = load %18 : $*Int                          // user: %22
+  end_access %18 : $*Int                          // id: %20
+  %21 = alloc_stack $Int                          // users: %22, %27, %25
+  store %19 to %21 : $*Int                        // id: %22
+  %23 = begin_access [modify] [static] %0 : $*Hasher // users: %26, %25
+  // function_ref Hasher.combine<A>(_:)
+  %24 = function_ref @$ss6HasherV7combineyyxSHRzlF : $@convention(method) <τ_0_0 where τ_0_0 : Hashable> (@in_guaranteed τ_0_0, @inout Hasher) -> () // user: %25
+  %25 = apply %24<Int>(%21, %23) : $@convention(method) <τ_0_0 where τ_0_0 : Hashable> (@in_guaranteed τ_0_0, @inout Hasher) -> ()
+  end_access %23 : $*Hasher                       // id: %26
+  dealloc_stack %21 : $*Int                       // id: %27
+  dealloc_stack %4 : $*Int                        // id: %28
+  %29 = tuple ()                                  // user: %30
+  return %29 : $()                                // id: %30
+} // end sil function '$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLO4hash4intoys6HasherVz_tF'
+
+// Address.CodingKeys.stringValue.getter
+sil private @$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLO11stringValueSSvg : $@convention(method) (Address.CodingKeys) -> @owned String {
+// %0 "self"                                      // users: %2, %1
+bb0(%0 : $Address.CodingKeys):
+  debug_value %0 : $Address.CodingKeys, let, name "self", argno 1 // id: %1
+  switch_enum %0 : $Address.CodingKeys, case #Address.CodingKeys.province!enumelt: bb1, case #Address.CodingKeys.city!enumelt: bb2 // id: %2
+
+bb1:                                              // Preds: bb0
+  %3 = string_literal utf8 "province"             // user: %8
+  %4 = integer_literal $Builtin.Word, 8           // user: %8
+  %5 = integer_literal $Builtin.Int1, -1          // user: %8
+  %6 = metatype $@thin String.Type                // user: %8
+  // function_ref String.init(_builtinStringLiteral:utf8CodeUnitCount:isASCII:)
+  %7 = function_ref @$sSS21_builtinStringLiteral17utf8CodeUnitCount7isASCIISSBp_BwBi1_tcfC : $@convention(method) (Builtin.RawPointer, Builtin.Word, Builtin.Int1, @thin String.Type) -> @owned String // user: %8
+  %8 = apply %7(%3, %4, %5, %6) : $@convention(method) (Builtin.RawPointer, Builtin.Word, Builtin.Int1, @thin String.Type) -> @owned String // user: %9
+  br bb3(%8 : $String)                            // id: %9
+
+bb2:                                              // Preds: bb0
+  %10 = string_literal utf8 "city"                // user: %15
+  %11 = integer_literal $Builtin.Word, 4          // user: %15
+  %12 = integer_literal $Builtin.Int1, -1         // user: %15
+  %13 = metatype $@thin String.Type               // user: %15
+  // function_ref String.init(_builtinStringLiteral:utf8CodeUnitCount:isASCII:)
+  %14 = function_ref @$sSS21_builtinStringLiteral17utf8CodeUnitCount7isASCIISSBp_BwBi1_tcfC : $@convention(method) (Builtin.RawPointer, Builtin.Word, Builtin.Int1, @thin String.Type) -> @owned String // user: %15
+  %15 = apply %14(%10, %11, %12, %13) : $@convention(method) (Builtin.RawPointer, Builtin.Word, Builtin.Int1, @thin String.Type) -> @owned String // user: %16
+  br bb3(%15 : $String)                           // id: %16
+
+// %17                                            // user: %18
+bb3(%17 : $String):                               // Preds: bb2 bb1
+  return %17 : $String                            // id: %18
+} // end sil function '$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLO11stringValueSSvg'
+
+// Address.CodingKeys.init(stringValue:)
+sil private @$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLO11stringValueAFSgSS_tcfC : $@convention(method) (@owned String, @thin Address.CodingKeys.Type) -> Optional<Address.CodingKeys> {
+// %0 "stringValue"                               // users: %66, %60, %59, %52, %42, %33, %32, %31, %24, %14, %5, %4, %3
+// %1 "$metatype"
+bb0(%0 : $String, %1 : $@thin Address.CodingKeys.Type):
+  %2 = alloc_stack $Address.CodingKeys, var, name "self" // users: %64, %55, %27, %67, %61
+  debug_value %0 : $String, let, name "stringValue", argno 1 // id: %3
+  retain_value %0 : $String                       // id: %4
+  debug_value %0 : $String, let, name "$match"    // id: %5
+  %6 = string_literal utf8 "province"             // user: %11
+  %7 = integer_literal $Builtin.Word, 8           // user: %11
+  %8 = integer_literal $Builtin.Int1, -1          // user: %11
+  %9 = metatype $@thin String.Type                // user: %11
+  // function_ref String.init(_builtinStringLiteral:utf8CodeUnitCount:isASCII:)
+  %10 = function_ref @$sSS21_builtinStringLiteral17utf8CodeUnitCount7isASCIISSBp_BwBi1_tcfC : $@convention(method) (Builtin.RawPointer, Builtin.Word, Builtin.Int1, @thin String.Type) -> @owned String // user: %11
+  %11 = apply %10(%6, %7, %8, %9) : $@convention(method) (Builtin.RawPointer, Builtin.Word, Builtin.Int1, @thin String.Type) -> @owned String // users: %21, %19, %18, %12
+  retain_value %11 : $String                      // id: %12
+  %13 = alloc_stack $String                       // users: %15, %14, %20
+  store %0 to %13 : $*String                      // id: %14
+  %15 = load %13 : $*String                       // user: %18
+  %16 = metatype $@thin String.Type               // user: %18
+  // function_ref static String.== infix(_:_:)
+  %17 = function_ref @$sSS2eeoiySbSS_SStFZ : $@convention(method) (@guaranteed String, @guaranteed String, @thin String.Type) -> Bool // user: %18
+  %18 = apply %17(%11, %15, %16) : $@convention(method) (@guaranteed String, @guaranteed String, @thin String.Type) -> Bool // user: %22
+  release_value %11 : $String                     // id: %19
+  dealloc_stack %13 : $*String                    // id: %20
+  release_value %11 : $String                     // id: %21
+  %22 = struct_extract %18 : $Bool, #Bool._value  // user: %23
+  cond_br %22, bb1, bb2                           // id: %23
+
+bb1:                                              // Preds: bb0
+  release_value %0 : $String                      // id: %24
+  %25 = metatype $@thin Address.CodingKeys.Type
+  %26 = enum $Address.CodingKeys, #Address.CodingKeys.province!enumelt // user: %28
+  %27 = begin_access [modify] [static] %2 : $*Address.CodingKeys // users: %28, %29
+  store %26 to %27 : $*Address.CodingKeys         // id: %28
+  end_access %27 : $*Address.CodingKeys           // id: %29
+  br bb5                                          // id: %30
+
+bb2:                                              // Preds: bb0
+  release_value %0 : $String                      // id: %31
+  retain_value %0 : $String                       // id: %32
+  debug_value %0 : $String, let, name "$match"    // id: %33
+  %34 = string_literal utf8 "city"                // user: %39
+  %35 = integer_literal $Builtin.Word, 4          // user: %39
+  %36 = integer_literal $Builtin.Int1, -1         // user: %39
+  %37 = metatype $@thin String.Type               // user: %39
+  // function_ref String.init(_builtinStringLiteral:utf8CodeUnitCount:isASCII:)
+  %38 = function_ref @$sSS21_builtinStringLiteral17utf8CodeUnitCount7isASCIISSBp_BwBi1_tcfC : $@convention(method) (Builtin.RawPointer, Builtin.Word, Builtin.Int1, @thin String.Type) -> @owned String // user: %39
+  %39 = apply %38(%34, %35, %36, %37) : $@convention(method) (Builtin.RawPointer, Builtin.Word, Builtin.Int1, @thin String.Type) -> @owned String // users: %49, %47, %46, %40
+  retain_value %39 : $String                      // id: %40
+  %41 = alloc_stack $String                       // users: %43, %42, %48
+  store %0 to %41 : $*String                      // id: %42
+  %43 = load %41 : $*String                       // user: %46
+  %44 = metatype $@thin String.Type               // user: %46
+  // function_ref static String.== infix(_:_:)
+  %45 = function_ref @$sSS2eeoiySbSS_SStFZ : $@convention(method) (@guaranteed String, @guaranteed String, @thin String.Type) -> Bool // user: %46
+  %46 = apply %45(%39, %43, %44) : $@convention(method) (@guaranteed String, @guaranteed String, @thin String.Type) -> Bool // user: %50
+  release_value %39 : $String                     // id: %47
+  dealloc_stack %41 : $*String                    // id: %48
+  release_value %39 : $String                     // id: %49
+  %50 = struct_extract %46 : $Bool, #Bool._value  // user: %51
+  cond_br %50, bb3, bb4                           // id: %51
+
+bb3:                                              // Preds: bb2
+  release_value %0 : $String                      // id: %52
+  %53 = metatype $@thin Address.CodingKeys.Type
+  %54 = enum $Address.CodingKeys, #Address.CodingKeys.city!enumelt // user: %56
+  %55 = begin_access [modify] [static] %2 : $*Address.CodingKeys // users: %56, %57
+  store %54 to %55 : $*Address.CodingKeys         // id: %56
+  end_access %55 : $*Address.CodingKeys           // id: %57
+  br bb5                                          // id: %58
+
+bb4:                                              // Preds: bb2
+  release_value %0 : $String                      // id: %59
+  release_value %0 : $String                      // id: %60
+  dealloc_stack %2 : $*Address.CodingKeys         // id: %61
+  %62 = enum $Optional<Address.CodingKeys>, #Optional.none!enumelt // user: %63
+  br bb6(%62 : $Optional<Address.CodingKeys>)     // id: %63
+
+bb5:                                              // Preds: bb3 bb1
+  %64 = load %2 : $*Address.CodingKeys            // user: %65
+  %65 = enum $Optional<Address.CodingKeys>, #Optional.some!enumelt, %64 : $Address.CodingKeys // user: %68
+  release_value %0 : $String                      // id: %66
+  dealloc_stack %2 : $*Address.CodingKeys         // id: %67
+  br bb6(%65 : $Optional<Address.CodingKeys>)     // id: %68
+
+// %69                                            // user: %70
+bb6(%69 : $Optional<Address.CodingKeys>):         // Preds: bb5 bb4
+  return %69 : $Optional<Address.CodingKeys>      // id: %70
+} // end sil function '$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLO11stringValueAFSgSS_tcfC'
+
+// Address.CodingKeys.intValue.getter
+sil private @$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLO8intValueSiSgvg : $@convention(method) (Address.CodingKeys) -> Optional<Int> {
+// %0 "self"                                      // user: %1
+bb0(%0 : $Address.CodingKeys):
+  debug_value %0 : $Address.CodingKeys, let, name "self", argno 1 // id: %1
+  %2 = enum $Optional<Int>, #Optional.none!enumelt // user: %3
+  return %2 : $Optional<Int>                      // id: %3
+} // end sil function '$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLO8intValueSiSgvg'
+
+// Address.CodingKeys.init(intValue:)
+sil private @$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLO8intValueAFSgSi_tcfC : $@convention(method) (Int, @thin Address.CodingKeys.Type) -> Optional<Address.CodingKeys> {
+// %0 "intValue"                                  // user: %3
+// %1 "$metatype"
+bb0(%0 : $Int, %1 : $@thin Address.CodingKeys.Type):
+  %2 = alloc_stack $Address.CodingKeys, let, name "self" // user: %4
+  debug_value %0 : $Int, let, name "intValue", argno 1 // id: %3
+  dealloc_stack %2 : $*Address.CodingKeys         // id: %4
+  %5 = enum $Optional<Address.CodingKeys>, #Optional.none!enumelt // user: %6
+  return %5 : $Optional<Address.CodingKeys>       // id: %6
+} // end sil function '$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLO8intValueAFSgSi_tcfC'
+
+// protocol witness for static Equatable.== infix(_:_:) in conformance Address.CodingKeys
+sil private [transparent] [thunk] @$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLOSQAASQ2eeoiySbx_xtFZTW : $@convention(witness_method: Equatable) (@in_guaranteed Address.CodingKeys, @in_guaranteed Address.CodingKeys, @thick Address.CodingKeys.Type) -> Bool {
+// %0                                             // user: %3
+// %1                                             // user: %4
+bb0(%0 : $*Address.CodingKeys, %1 : $*Address.CodingKeys, %2 : $@thick Address.CodingKeys.Type):
+  %3 = load %0 : $*Address.CodingKeys             // user: %7
+  %4 = load %1 : $*Address.CodingKeys             // user: %7
+  %5 = metatype $@thin Address.CodingKeys.Type    // user: %7
+  // function_ref static Address.CodingKeys.__derived_enum_equals(_:_:)
+  %6 = function_ref @$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLO21__derived_enum_equalsySbAF_AFtFZ : $@convention(method) (Address.CodingKeys, Address.CodingKeys, @thin Address.CodingKeys.Type) -> Bool // user: %7
+  %7 = apply %6(%3, %4, %5) : $@convention(method) (Address.CodingKeys, Address.CodingKeys, @thin Address.CodingKeys.Type) -> Bool // user: %8
+  return %7 : $Bool                               // id: %8
+} // end sil function '$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLOSQAASQ2eeoiySbx_xtFZTW'
+
+// protocol witness for Hashable.hashValue.getter in conformance Address.CodingKeys
+sil private [transparent] [thunk] @$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLOSHAASH9hashValueSivgTW : $@convention(witness_method: Hashable) (@in_guaranteed Address.CodingKeys) -> Int {
+// %0                                             // user: %1
+bb0(%0 : $*Address.CodingKeys):
+  %1 = load %0 : $*Address.CodingKeys             // user: %3
+  // function_ref Address.CodingKeys.hashValue.getter
+  %2 = function_ref @$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLO9hashValueSivg : $@convention(method) (Address.CodingKeys) -> Int // user: %3
+  %3 = apply %2(%1) : $@convention(method) (Address.CodingKeys) -> Int // user: %4
+  return %3 : $Int                                // id: %4
+} // end sil function '$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLOSHAASH9hashValueSivgTW'
+
+// protocol witness for Hashable.hash(into:) in conformance Address.CodingKeys
+sil private [transparent] [thunk] @$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLOSHAASH4hash4intoys6HasherVz_tFTW : $@convention(witness_method: Hashable) (@inout Hasher, @in_guaranteed Address.CodingKeys) -> () {
+// %0                                             // user: %4
+// %1                                             // user: %2
+bb0(%0 : $*Hasher, %1 : $*Address.CodingKeys):
+  %2 = load %1 : $*Address.CodingKeys             // user: %4
+  // function_ref Address.CodingKeys.hash(into:)
+  %3 = function_ref @$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLO4hash4intoys6HasherVz_tF : $@convention(method) (@inout Hasher, Address.CodingKeys) -> () // user: %4
+  %4 = apply %3(%0, %2) : $@convention(method) (@inout Hasher, Address.CodingKeys) -> ()
+  %5 = tuple ()                                   // user: %6
+  return %5 : $()                                 // id: %6
+} // end sil function '$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLOSHAASH4hash4intoys6HasherVz_tFTW'
+
+// protocol witness for Hashable._rawHashValue(seed:) in conformance Address.CodingKeys
+sil private [transparent] [thunk] [always_inline] @$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLOSHAASH13_rawHashValue4seedS2i_tFTW : $@convention(witness_method: Hashable) (Int, @in_guaranteed Address.CodingKeys) -> Int {
+// %0                                             // user: %3
+// %1                                             // user: %3
+bb0(%0 : $Int, %1 : $*Address.CodingKeys):
+  // function_ref Hashable._rawHashValue(seed:)
+  %2 = function_ref @$sSHsE13_rawHashValue4seedS2i_tF : $@convention(method) <τ_0_0 where τ_0_0 : Hashable> (Int, @in_guaranteed τ_0_0) -> Int // user: %3
+  %3 = apply %2<Address.CodingKeys>(%0, %1) : $@convention(method) <τ_0_0 where τ_0_0 : Hashable> (Int, @in_guaranteed τ_0_0) -> Int // user: %4
+  return %3 : $Int                                // id: %4
+} // end sil function '$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLOSHAASH13_rawHashValue4seedS2i_tFTW'
+
+// Hashable._rawHashValue(seed:)
+sil [serialized] [always_inline] @$sSHsE13_rawHashValue4seedS2i_tF : $@convention(method) <τ_0_0 where τ_0_0 : Hashable> (Int, @in_guaranteed τ_0_0) -> Int
+
+// protocol witness for CodingKey.stringValue.getter in conformance Address.CodingKeys
+sil private [transparent] [thunk] @$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLOs0C3KeyAAsAGP11stringValueSSvgTW : $@convention(witness_method: CodingKey) (@in_guaranteed Address.CodingKeys) -> @owned String {
+// %0                                             // user: %1
+bb0(%0 : $*Address.CodingKeys):
+  %1 = load %0 : $*Address.CodingKeys             // user: %3
+  // function_ref Address.CodingKeys.stringValue.getter
+  %2 = function_ref @$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLO11stringValueSSvg : $@convention(method) (Address.CodingKeys) -> @owned String // user: %3
+  %3 = apply %2(%1) : $@convention(method) (Address.CodingKeys) -> @owned String // user: %4
+  return %3 : $String                             // id: %4
+} // end sil function '$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLOs0C3KeyAAsAGP11stringValueSSvgTW'
+
+// protocol witness for CodingKey.init(stringValue:) in conformance Address.CodingKeys
+sil private [transparent] [thunk] @$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLOs0C3KeyAAsAGP11stringValuexSgSS_tcfCTW : $@convention(witness_method: CodingKey) (@owned String, @thick Address.CodingKeys.Type) -> @out Optional<Address.CodingKeys> {
+// %0                                             // user: %6
+// %1                                             // user: %5
+bb0(%0 : $*Optional<Address.CodingKeys>, %1 : $String, %2 : $@thick Address.CodingKeys.Type):
+  %3 = metatype $@thin Address.CodingKeys.Type    // user: %5
+  // function_ref Address.CodingKeys.init(stringValue:)
+  %4 = function_ref @$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLO11stringValueAFSgSS_tcfC : $@convention(method) (@owned String, @thin Address.CodingKeys.Type) -> Optional<Address.CodingKeys> // user: %5
+  %5 = apply %4(%1, %3) : $@convention(method) (@owned String, @thin Address.CodingKeys.Type) -> Optional<Address.CodingKeys> // user: %6
+  store %5 to %0 : $*Optional<Address.CodingKeys> // id: %6
+  %7 = tuple ()                                   // user: %8
+  return %7 : $()                                 // id: %8
+} // end sil function '$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLOs0C3KeyAAsAGP11stringValuexSgSS_tcfCTW'
+
+// protocol witness for CodingKey.intValue.getter in conformance Address.CodingKeys
+sil private [transparent] [thunk] @$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLOs0C3KeyAAsAGP8intValueSiSgvgTW : $@convention(witness_method: CodingKey) (@in_guaranteed Address.CodingKeys) -> Optional<Int> {
+// %0                                             // user: %1
+bb0(%0 : $*Address.CodingKeys):
+  %1 = load %0 : $*Address.CodingKeys             // user: %3
+  // function_ref Address.CodingKeys.intValue.getter
+  %2 = function_ref @$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLO8intValueSiSgvg : $@convention(method) (Address.CodingKeys) -> Optional<Int> // user: %3
+  %3 = apply %2(%1) : $@convention(method) (Address.CodingKeys) -> Optional<Int> // user: %4
+  return %3 : $Optional<Int>                      // id: %4
+} // end sil function '$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLOs0C3KeyAAsAGP8intValueSiSgvgTW'
+
+// protocol witness for CodingKey.init(intValue:) in conformance Address.CodingKeys
+sil private [transparent] [thunk] @$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLOs0C3KeyAAsAGP8intValuexSgSi_tcfCTW : $@convention(witness_method: CodingKey) (Int, @thick Address.CodingKeys.Type) -> @out Optional<Address.CodingKeys> {
+// %0                                             // user: %6
+// %1                                             // user: %5
+bb0(%0 : $*Optional<Address.CodingKeys>, %1 : $Int, %2 : $@thick Address.CodingKeys.Type):
+  %3 = metatype $@thin Address.CodingKeys.Type    // user: %5
+  // function_ref Address.CodingKeys.init(intValue:)
+  %4 = function_ref @$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLO8intValueAFSgSi_tcfC : $@convention(method) (Int, @thin Address.CodingKeys.Type) -> Optional<Address.CodingKeys> // user: %5
+  %5 = apply %4(%1, %3) : $@convention(method) (Int, @thin Address.CodingKeys.Type) -> Optional<Address.CodingKeys> // user: %6
+  store %5 to %0 : $*Optional<Address.CodingKeys> // id: %6
+  %7 = tuple ()                                   // user: %8
+  return %7 : $()                                 // id: %8
+} // end sil function '$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLOs0C3KeyAAsAGP8intValuexSgSi_tcfCTW'
+
+// protocol witness for CustomDebugStringConvertible.debugDescription.getter in conformance Address.CodingKeys
+sil private [transparent] [thunk] @$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLOs28CustomDebugStringConvertibleAAsAGP16debugDescriptionSSvgTW : $@convention(witness_method: CustomDebugStringConvertible) (@in_guaranteed Address.CodingKeys) -> @owned String {
+// %0                                             // user: %2
+bb0(%0 : $*Address.CodingKeys):
+  // function_ref CodingKey.debugDescription.getter
+  %1 = function_ref @$ss9CodingKeyPsE16debugDescriptionSSvg : $@convention(method) <τ_0_0 where τ_0_0 : CodingKey> (@in_guaranteed τ_0_0) -> @owned String // user: %2
+  %2 = apply %1<Address.CodingKeys>(%0) : $@convention(method) <τ_0_0 where τ_0_0 : CodingKey> (@in_guaranteed τ_0_0) -> @owned String // user: %3
+  return %2 : $String                             // id: %3
+} // end sil function '$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLOs28CustomDebugStringConvertibleAAsAGP16debugDescriptionSSvgTW'
+
+// CodingKey.debugDescription.getter
+sil @$ss9CodingKeyPsE16debugDescriptionSSvg : $@convention(method) <τ_0_0 where τ_0_0 : CodingKey> (@in_guaranteed τ_0_0) -> @owned String
+
+// protocol witness for CustomStringConvertible.description.getter in conformance Address.CodingKeys
+sil private [transparent] [thunk] @$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLOs23CustomStringConvertibleAAsAGP11descriptionSSvgTW : $@convention(witness_method: CustomStringConvertible) (@in_guaranteed Address.CodingKeys) -> @owned String {
+// %0                                             // user: %2
+bb0(%0 : $*Address.CodingKeys):
+  // function_ref CodingKey.description.getter
+  %1 = function_ref @$ss9CodingKeyPsE11descriptionSSvg : $@convention(method) <τ_0_0 where τ_0_0 : CodingKey> (@in_guaranteed τ_0_0) -> @owned String // user: %2
+  %2 = apply %1<Address.CodingKeys>(%0) : $@convention(method) <τ_0_0 where τ_0_0 : CodingKey> (@in_guaranteed τ_0_0) -> @owned String // user: %3
+  return %2 : $String                             // id: %3
+} // end sil function '$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLOs23CustomStringConvertibleAAsAGP11descriptionSSvgTW'
+
+// CodingKey.description.getter
+sil @$ss9CodingKeyPsE11descriptionSSvg : $@convention(method) <τ_0_0 where τ_0_0 : CodingKey> (@in_guaranteed τ_0_0) -> @owned String
+
+// Address.init(from:)
+sil hidden @$s7Student7AddressV4fromACs7Decoder_p_tKcfC : $@convention(method) (@in Decoder, @thin Address.Type) -> (@owned Address, @error Error) {
+// %0 "decoder"                                   // users: %73, %53, %9, %6
+// %1 "$metatype"
+bb0(%0 : $*Decoder, %1 : $@thin Address.Type):
+  %2 = alloc_stack $Builtin.Int2                  // users: %74, %43, %27, %5, %82, %56
+  %3 = alloc_stack [dynamic_lifetime] $Address, var, name "self" // users: %40, %24, %54, %77, %81, %55
+  %4 = integer_literal $Builtin.Int2, 0           // user: %5
+  store %4 to %2 : $*Builtin.Int2                 // id: %5
+  debug_value_addr %0 : $*Decoder, let, name "decoder", argno 1 // id: %6
+  debug_value undef : $Error, var, name "$error", argno 2 // id: %7
+  %8 = alloc_stack $KeyedDecodingContainer<Address.CodingKeys>, let, name "container" // users: %48, %47, %37, %70, %69, %21, %64, %63, %13, %59
+  %9 = open_existential_addr immutable_access %0 : $*Decoder to $*@opened("563DE21C-301D-11EC-B195-AC87A33022EC") Decoder // users: %13, %13, %12
+  %10 = metatype $@thin Address.CodingKeys.Type
+  %11 = metatype $@thick Address.CodingKeys.Type  // user: %13
+  %12 = witness_method $@opened("563DE21C-301D-11EC-B195-AC87A33022EC") Decoder, #Decoder.container : <Self where Self : Decoder><Key where Key : CodingKey> (Self) -> (Key.Type) throws -> KeyedDecodingContainer<Key>, %9 : $*@opened("563DE21C-301D-11EC-B195-AC87A33022EC") Decoder : $@convention(witness_method: Decoder) <τ_0_0 where τ_0_0 : Decoder><τ_1_0 where τ_1_0 : CodingKey> (@thick τ_1_0.Type, @in_guaranteed τ_0_0) -> (@out KeyedDecodingContainer<τ_1_0>, @error Error) // type-defs: %9; user: %13
+  try_apply %12<@opened("563DE21C-301D-11EC-B195-AC87A33022EC") Decoder, Address.CodingKeys>(%8, %11, %9) : $@convention(witness_method: Decoder) <τ_0_0 where τ_0_0 : Decoder><τ_1_0 where τ_1_0 : CodingKey> (@thick τ_1_0.Type, @in_guaranteed τ_0_0) -> (@out KeyedDecodingContainer<τ_1_0>, @error Error), normal bb1, error bb4 // type-defs: %9; id: %13
+
+bb1(%14 : $()):                                   // Preds: bb0
+  %15 = metatype $@thin String.Type               // user: %21
+  %16 = metatype $@thin Address.CodingKeys.Type
+  %17 = enum $Address.CodingKeys, #Address.CodingKeys.province!enumelt // user: %19
+  %18 = alloc_stack $Address.CodingKeys           // users: %19, %23, %21, %62
+  store %17 to %18 : $*Address.CodingKeys         // id: %19
+  // function_ref KeyedDecodingContainer.decode(_:forKey:)
+  %20 = function_ref @$ss22KeyedDecodingContainerV6decode_6forKeyS2Sm_xtKF : $@convention(method) <τ_0_0 where τ_0_0 : CodingKey> (@thin String.Type, @in_guaranteed τ_0_0, @in_guaranteed KeyedDecodingContainer<τ_0_0>) -> (@owned String, @error Error) // user: %21
+  try_apply %20<Address.CodingKeys>(%15, %18, %8) : $@convention(method) <τ_0_0 where τ_0_0 : CodingKey> (@thin String.Type, @in_guaranteed τ_0_0, @in_guaranteed KeyedDecodingContainer<τ_0_0>) -> (@owned String, @error Error), normal bb2, error bb5 // id: %21
+
+// %22                                            // users: %67, %52, %49, %29, %28
+bb2(%22 : $String):                               // Preds: bb1
+  dealloc_stack %18 : $*Address.CodingKeys        // id: %23
+  %24 = begin_access [modify] [static] %3 : $*Address // users: %30, %25
+  %25 = struct_element_addr %24 : $*Address, #Address.province // user: %29
+  %26 = integer_literal $Builtin.Int2, 1          // user: %27
+  store %26 to %2 : $*Builtin.Int2                // id: %27
+  retain_value %22 : $String                      // id: %28
+  store %22 to %25 : $*String                     // id: %29
+  end_access %24 : $*Address                      // id: %30
+  %31 = metatype $@thin String.Type               // user: %37
+  %32 = metatype $@thin Address.CodingKeys.Type
+  %33 = enum $Address.CodingKeys, #Address.CodingKeys.city!enumelt // user: %35
+  %34 = alloc_stack $Address.CodingKeys           // users: %35, %39, %37, %68
+  store %33 to %34 : $*Address.CodingKeys         // id: %35
+  // function_ref KeyedDecodingContainer.decode(_:forKey:)
+  %36 = function_ref @$ss22KeyedDecodingContainerV6decode_6forKeyS2Sm_xtKF : $@convention(method) <τ_0_0 where τ_0_0 : CodingKey> (@thin String.Type, @in_guaranteed τ_0_0, @in_guaranteed KeyedDecodingContainer<τ_0_0>) -> (@owned String, @error Error) // user: %37
+  try_apply %36<Address.CodingKeys>(%31, %34, %8) : $@convention(method) <τ_0_0 where τ_0_0 : CodingKey> (@thin String.Type, @in_guaranteed τ_0_0, @in_guaranteed KeyedDecodingContainer<τ_0_0>) -> (@owned String, @error Error), normal bb3, error bb6 // id: %37
+
+// %38                                            // users: %51, %49, %45, %44
+bb3(%38 : $String):                               // Preds: bb2
+  dealloc_stack %34 : $*Address.CodingKeys        // id: %39
+  %40 = begin_access [modify] [static] %3 : $*Address // users: %46, %41
+  %41 = struct_element_addr %40 : $*Address, #Address.city // user: %45
+  %42 = integer_literal $Builtin.Int2, -1         // user: %43
+  store %42 to %2 : $*Builtin.Int2                // id: %43
+  retain_value %38 : $String                      // id: %44
+  store %38 to %41 : $*String                     // id: %45
+  end_access %40 : $*Address                      // id: %46
+  destroy_addr %8 : $*KeyedDecodingContainer<Address.CodingKeys> // id: %47
+  dealloc_stack %8 : $*KeyedDecodingContainer<Address.CodingKeys> // id: %48
+  %49 = struct $Address (%22 : $String, %38 : $String) // users: %57, %50
+  retain_value %49 : $Address                     // id: %50
+  release_value %38 : $String                     // id: %51
+  release_value %22 : $String                     // id: %52
+  destroy_addr %0 : $*Decoder                     // id: %53
+  destroy_addr %3 : $*Address                     // id: %54
+  dealloc_stack %3 : $*Address                    // id: %55
+  dealloc_stack %2 : $*Builtin.Int2               // id: %56
+  return %49 : $Address                           // id: %57
+
+// %58                                            // user: %60
+bb4(%58 : $Error):                                // Preds: bb0
+  dealloc_stack %8 : $*KeyedDecodingContainer<Address.CodingKeys> // id: %59
+  br bb7(%58 : $Error)                            // id: %60
+
+// %61                                            // user: %65
+bb5(%61 : $Error):                                // Preds: bb1
+  dealloc_stack %18 : $*Address.CodingKeys        // id: %62
+  destroy_addr %8 : $*KeyedDecodingContainer<Address.CodingKeys> // id: %63
+  dealloc_stack %8 : $*KeyedDecodingContainer<Address.CodingKeys> // id: %64
+  br bb7(%61 : $Error)                            // id: %65
+
+// %66                                            // user: %71
+bb6(%66 : $Error):                                // Preds: bb2
+  release_value %22 : $String                     // id: %67
+  dealloc_stack %34 : $*Address.CodingKeys        // id: %68
+  destroy_addr %8 : $*KeyedDecodingContainer<Address.CodingKeys> // id: %69
+  dealloc_stack %8 : $*KeyedDecodingContainer<Address.CodingKeys> // id: %70
+  br bb7(%66 : $Error)                            // id: %71
+
+// %72                                            // user: %83
+bb7(%72 : $Error):                                // Preds: bb6 bb5 bb4
+  destroy_addr %0 : $*Decoder                     // id: %73
+  %74 = load %2 : $*Builtin.Int2                  // user: %75
+  %75 = builtin "trunc_Int2_Int1"(%74 : $Builtin.Int2) : $Builtin.Int1 // user: %76
+  cond_br %75, bb8, bb9                           // id: %76
+
+bb8:                                              // Preds: bb7
+  %77 = struct_element_addr %3 : $*Address, #Address.province // user: %78
+  destroy_addr %77 : $*String                     // id: %78
+  br bb10                                         // id: %79
+
+bb9:                                              // Preds: bb7
+  br bb10                                         // id: %80
+
+bb10:                                             // Preds: bb9 bb8
+  dealloc_stack %3 : $*Address                    // id: %81
+  dealloc_stack %2 : $*Builtin.Int2               // id: %82
+  throw %72 : $Error                              // id: %83
+} // end sil function '$s7Student7AddressV4fromACs7Decoder_p_tKcfC'
+
+// KeyedDecodingContainer.decode(_:forKey:)
+sil @$ss22KeyedDecodingContainerV6decode_6forKeyS2Sm_xtKF : $@convention(method) <τ_0_0 where τ_0_0 : CodingKey> (@thin String.Type, @in_guaranteed τ_0_0, @in_guaranteed KeyedDecodingContainer<τ_0_0>) -> (@owned String, @error Error)
+
+// Address.encode(to:)
+sil hidden @$s7Student7AddressV6encode2toys7Encoder_p_tKF : $@convention(method) (@in_guaranteed Encoder, @guaranteed Address) -> @error Error {
+// %0 "encoder"                                   // users: %6, %2
+// %1 "self"                                      // users: %24, %11, %3
+bb0(%0 : $*Encoder, %1 : $Address):
+  debug_value_addr %0 : $*Encoder, let, name "encoder", argno 1 // id: %2
+  debug_value %1 : $Address, let, name "self", argno 2 // id: %3
+  debug_value undef : $Error, var, name "$error", argno 3 // id: %4
+  %5 = alloc_stack $KeyedEncodingContainer<Address.CodingKeys>, var, name "container" // users: %38, %37, %53, %52, %46, %45, %10, %17, %30
+  %6 = open_existential_addr immutable_access %0 : $*Encoder to $*@opened("563E5BDE-301D-11EC-B195-AC87A33022EC") Encoder // users: %10, %10, %9
+  %7 = metatype $@thin Address.CodingKeys.Type
+  %8 = metatype $@thick Address.CodingKeys.Type   // user: %10
+  %9 = witness_method $@opened("563E5BDE-301D-11EC-B195-AC87A33022EC") Encoder, #Encoder.container : <Self where Self : Encoder><Key where Key : CodingKey> (Self) -> (Key.Type) -> KeyedEncodingContainer<Key>, %6 : $*@opened("563E5BDE-301D-11EC-B195-AC87A33022EC") Encoder : $@convention(witness_method: Encoder) <τ_0_0 where τ_0_0 : Encoder><τ_1_0 where τ_1_0 : CodingKey> (@thick τ_1_0.Type, @in_guaranteed τ_0_0) -> @out KeyedEncodingContainer<τ_1_0> // type-defs: %6; user: %10
+  %10 = apply %9<@opened("563E5BDE-301D-11EC-B195-AC87A33022EC") Encoder, Address.CodingKeys>(%5, %8, %6) : $@convention(witness_method: Encoder) <τ_0_0 where τ_0_0 : Encoder><τ_1_0 where τ_1_0 : CodingKey> (@thick τ_1_0.Type, @in_guaranteed τ_0_0) -> @out KeyedEncodingContainer<τ_1_0> // type-defs: %6
+  %11 = struct_extract %1 : $Address, #Address.province // users: %44, %23, %19, %12
+  retain_value %11 : $String                      // id: %12
+  %13 = metatype $@thin Address.CodingKeys.Type
+  %14 = enum $Address.CodingKeys, #Address.CodingKeys.province!enumelt // user: %16
+  %15 = alloc_stack $Address.CodingKeys           // users: %16, %22, %19, %43
+  store %14 to %15 : $*Address.CodingKeys         // id: %16
+  %17 = begin_access [modify] [static] %5 : $*KeyedEncodingContainer<Address.CodingKeys> // users: %21, %19, %42
+  // function_ref KeyedEncodingContainer.encode(_:forKey:)
+  %18 = function_ref @$ss22KeyedEncodingContainerV6encode_6forKeyySS_xtKF : $@convention(method) <τ_0_0 where τ_0_0 : CodingKey> (@guaranteed String, @in_guaranteed τ_0_0, @inout KeyedEncodingContainer<τ_0_0>) -> @error Error // user: %19
+  try_apply %18<Address.CodingKeys>(%11, %15, %17) : $@convention(method) <τ_0_0 where τ_0_0 : CodingKey> (@guaranteed String, @in_guaranteed τ_0_0, @inout KeyedEncodingContainer<τ_0_0>) -> @error Error, normal bb1, error bb3 // id: %19
+
+bb1(%20 : $()):                                   // Preds: bb0
+  end_access %17 : $*KeyedEncodingContainer<Address.CodingKeys> // id: %21
+  dealloc_stack %15 : $*Address.CodingKeys        // id: %22
+  release_value %11 : $String                     // id: %23
+  %24 = struct_extract %1 : $Address, #Address.city // users: %51, %36, %32, %25
+  retain_value %24 : $String                      // id: %25
+  %26 = metatype $@thin Address.CodingKeys.Type
+  %27 = enum $Address.CodingKeys, #Address.CodingKeys.city!enumelt // user: %29
+  %28 = alloc_stack $Address.CodingKeys           // users: %29, %35, %32, %50
+  store %27 to %28 : $*Address.CodingKeys         // id: %29
+  %30 = begin_access [modify] [static] %5 : $*KeyedEncodingContainer<Address.CodingKeys> // users: %34, %32, %49
+  // function_ref KeyedEncodingContainer.encode(_:forKey:)
+  %31 = function_ref @$ss22KeyedEncodingContainerV6encode_6forKeyySS_xtKF : $@convention(method) <τ_0_0 where τ_0_0 : CodingKey> (@guaranteed String, @in_guaranteed τ_0_0, @inout KeyedEncodingContainer<τ_0_0>) -> @error Error // user: %32
+  try_apply %31<Address.CodingKeys>(%24, %28, %30) : $@convention(method) <τ_0_0 where τ_0_0 : CodingKey> (@guaranteed String, @in_guaranteed τ_0_0, @inout KeyedEncodingContainer<τ_0_0>) -> @error Error, normal bb2, error bb4 // id: %32
+
+bb2(%33 : $()):                                   // Preds: bb1
+  end_access %30 : $*KeyedEncodingContainer<Address.CodingKeys> // id: %34
+  dealloc_stack %28 : $*Address.CodingKeys        // id: %35
+  release_value %24 : $String                     // id: %36
+  destroy_addr %5 : $*KeyedEncodingContainer<Address.CodingKeys> // id: %37
+  dealloc_stack %5 : $*KeyedEncodingContainer<Address.CodingKeys> // id: %38
+  %39 = tuple ()                                  // user: %40
+  return %39 : $()                                // id: %40
+
+// %41                                            // user: %47
+bb3(%41 : $Error):                                // Preds: bb0
+  end_access %17 : $*KeyedEncodingContainer<Address.CodingKeys> // id: %42
+  dealloc_stack %15 : $*Address.CodingKeys        // id: %43
+  release_value %11 : $String                     // id: %44
+  destroy_addr %5 : $*KeyedEncodingContainer<Address.CodingKeys> // id: %45
+  dealloc_stack %5 : $*KeyedEncodingContainer<Address.CodingKeys> // id: %46
+  br bb5(%41 : $Error)                            // id: %47
+
+// %48                                            // user: %54
+bb4(%48 : $Error):                                // Preds: bb1
+  end_access %30 : $*KeyedEncodingContainer<Address.CodingKeys> // id: %49
+  dealloc_stack %28 : $*Address.CodingKeys        // id: %50
+  release_value %24 : $String                     // id: %51
+  destroy_addr %5 : $*KeyedEncodingContainer<Address.CodingKeys> // id: %52
+  dealloc_stack %5 : $*KeyedEncodingContainer<Address.CodingKeys> // id: %53
+  br bb5(%48 : $Error)                            // id: %54
+
+// %55                                            // user: %56
+bb5(%55 : $Error):                                // Preds: bb4 bb3
+  throw %55 : $Error                              // id: %56
+} // end sil function '$s7Student7AddressV6encode2toys7Encoder_p_tKF'
+
+// KeyedEncodingContainer.encode(_:forKey:)
+sil @$ss22KeyedEncodingContainerV6encode_6forKeyySS_xtKF : $@convention(method) <τ_0_0 where τ_0_0 : CodingKey> (@guaranteed String, @in_guaranteed τ_0_0, @inout KeyedEncodingContainer<τ_0_0>) -> @error Error
+
+// protocol witness for Decodable.init(from:) in conformance Address
+sil private [transparent] [thunk] @$s7Student7AddressVSeAASe4fromxs7Decoder_p_tKcfCTW : $@convention(witness_method: Decodable) (@in Decoder, @thick Address.Type) -> (@out Address, @error Error) {
+// %0                                             // user: %7
+// %1                                             // user: %5
+bb0(%0 : $*Address, %1 : $*Decoder, %2 : $@thick Address.Type):
+  %3 = metatype $@thin Address.Type               // user: %5
+  // function_ref Address.init(from:)
+  %4 = function_ref @$s7Student7AddressV4fromACs7Decoder_p_tKcfC : $@convention(method) (@in Decoder, @thin Address.Type) -> (@owned Address, @error Error) // user: %5
+  try_apply %4(%1, %3) : $@convention(method) (@in Decoder, @thin Address.Type) -> (@owned Address, @error Error), normal bb1, error bb2 // id: %5
+
+// %6                                             // user: %7
+bb1(%6 : $Address):                               // Preds: bb0
+  store %6 to %0 : $*Address                      // id: %7
+  %8 = tuple ()                                   // user: %9
+  return %8 : $()                                 // id: %9
+
+// %10                                            // user: %11
+bb2(%10 : $Error):                                // Preds: bb0
+  throw %10 : $Error                              // id: %11
+} // end sil function '$s7Student7AddressVSeAASe4fromxs7Decoder_p_tKcfCTW'
+
+// protocol witness for Encodable.encode(to:) in conformance Address
+sil private [transparent] [thunk] @$s7Student7AddressVSEAASE6encode2toys7Encoder_p_tKFTW : $@convention(witness_method: Encodable) (@in_guaranteed Encoder, @in_guaranteed Address) -> @error Error {
+// %0                                             // user: %4
+// %1                                             // user: %2
+bb0(%0 : $*Encoder, %1 : $*Address):
+  %2 = load %1 : $*Address                        // user: %4
+  // function_ref Address.encode(to:)
+  %3 = function_ref @$s7Student7AddressV6encode2toys7Encoder_p_tKF : $@convention(method) (@in_guaranteed Encoder, @guaranteed Address) -> @error Error // user: %4
+  try_apply %3(%0, %2) : $@convention(method) (@in_guaranteed Encoder, @guaranteed Address) -> @error Error, normal bb1, error bb2 // id: %4
+
+bb1(%5 : $()):                                    // Preds: bb0
+  %6 = tuple ()                                   // user: %7
+  return %6 : $()                                 // id: %7
+
+// %8                                             // user: %9
+bb2(%8 : $Error):                                 // Preds: bb0
+  throw %8 : $Error                               // id: %9
+} // end sil function '$s7Student7AddressVSEAASE6encode2toys7Encoder_p_tKFTW'
+
+// Student.name.getter
+sil hidden [transparent] @$s7StudentAAV4nameSSvg : $@convention(method) (@guaranteed Student) -> @owned String {
+// %0 "self"                                      // users: %2, %1
+bb0(%0 : $Student):
+  debug_value %0 : $Student, let, name "self", argno 1 // id: %1
+  %2 = struct_extract %0 : $Student, #Student.name // users: %4, %3
+  retain_value %2 : $String                       // id: %3
+  return %2 : $String                             // id: %4
+} // end sil function '$s7StudentAAV4nameSSvg'
+
+// Student.name.setter
+sil hidden [transparent] @$s7StudentAAV4nameSSvs : $@convention(method) (@owned String, @inout Student) -> () {
+// %0 "value"                                     // users: %11, %8, %4, %2
+// %1 "self"                                      // users: %5, %3
+bb0(%0 : $String, %1 : $*Student):
+  debug_value %0 : $String, let, name "value", argno 1 // id: %2
+  debug_value_addr %1 : $*Student, var, name "self", argno 2 // id: %3
+  retain_value %0 : $String                       // id: %4
+  %5 = begin_access [modify] [static] %1 : $*Student // users: %10, %6
+  %6 = struct_element_addr %5 : $*Student, #Student.name // users: %8, %7
+  %7 = load %6 : $*String                         // user: %9
+  store %0 to %6 : $*String                       // id: %8
+  release_value %7 : $String                      // id: %9
+  end_access %5 : $*Student                       // id: %10
+  release_value %0 : $String                      // id: %11
+  %12 = tuple ()                                  // user: %13
+  return %12 : $()                                // id: %13
+} // end sil function '$s7StudentAAV4nameSSvs'
+
+// Student.name.modify
+sil hidden [transparent] @$s7StudentAAV4nameSSvM : $@yield_once @convention(method) (@inout Student) -> @yields @inout String {
+// %0 "self"                                      // users: %2, %1
+bb0(%0 : $*Student):
+  debug_value_addr %0 : $*Student, var, name "self", argno 1 // id: %1
+  %2 = begin_access [modify] [static] %0 : $*Student // users: %5, %8, %3
+  %3 = struct_element_addr %2 : $*Student, #Student.name // user: %4
+  yield %3 : $*String, resume bb1, unwind bb2     // id: %4
+
+bb1:                                              // Preds: bb0
+  end_access %2 : $*Student                       // id: %5
+  %6 = tuple ()                                   // user: %7
+  return %6 : $()                                 // id: %7
+
+bb2:                                              // Preds: bb0
+  end_access %2 : $*Student                       // id: %8
+  unwind                                          // id: %9
+} // end sil function '$s7StudentAAV4nameSSvM'
+
+// Student.age.getter
+sil hidden [transparent] @$s7StudentAAV3ageSivg : $@convention(method) (@guaranteed Student) -> Int {
+// %0 "self"                                      // users: %2, %1
+bb0(%0 : $Student):
+  debug_value %0 : $Student, let, name "self", argno 1 // id: %1
+  %2 = struct_extract %0 : $Student, #Student.age // user: %3
+  return %2 : $Int                                // id: %3
+} // end sil function '$s7StudentAAV3ageSivg'
+
+// Student.age.setter
+sil hidden [transparent] @$s7StudentAAV3ageSivs : $@convention(method) (Int, @inout Student) -> () {
+// %0 "value"                                     // users: %6, %2
+// %1 "self"                                      // users: %4, %3
+bb0(%0 : $Int, %1 : $*Student):
+  debug_value %0 : $Int, let, name "value", argno 1 // id: %2
+  debug_value_addr %1 : $*Student, var, name "self", argno 2 // id: %3
+  %4 = begin_access [modify] [static] %1 : $*Student // users: %7, %5
+  %5 = struct_element_addr %4 : $*Student, #Student.age // user: %6
+  store %0 to %5 : $*Int                          // id: %6
+  end_access %4 : $*Student                       // id: %7
+  %8 = tuple ()                                   // user: %9
+  return %8 : $()                                 // id: %9
+} // end sil function '$s7StudentAAV3ageSivs'
+
+// Student.age.modify
+sil hidden [transparent] @$s7StudentAAV3ageSivM : $@yield_once @convention(method) (@inout Student) -> @yields @inout Int {
+// %0 "self"                                      // users: %2, %1
+bb0(%0 : $*Student):
+  debug_value_addr %0 : $*Student, var, name "self", argno 1 // id: %1
+  %2 = begin_access [modify] [static] %0 : $*Student // users: %5, %8, %3
+  %3 = struct_element_addr %2 : $*Student, #Student.age // user: %4
+  yield %3 : $*Int, resume bb1, unwind bb2        // id: %4
+
+bb1:                                              // Preds: bb0
+  end_access %2 : $*Student                       // id: %5
+  %6 = tuple ()                                   // user: %7
+  return %6 : $()                                 // id: %7
+
+bb2:                                              // Preds: bb0
+  end_access %2 : $*Student                       // id: %8
+  unwind                                          // id: %9
+} // end sil function '$s7StudentAAV3ageSivM'
+
+// Student.address.getter
+sil hidden [transparent] @$s7StudentAAV7addressAA7AddressVvg : $@convention(method) (@guaranteed Student) -> @owned Address {
+// %0 "self"                                      // users: %2, %1
+bb0(%0 : $Student):
+  debug_value %0 : $Student, let, name "self", argno 1 // id: %1
+  %2 = struct_extract %0 : $Student, #Student.address // users: %4, %3
+  retain_value %2 : $Address                      // id: %3
+  return %2 : $Address                            // id: %4
+} // end sil function '$s7StudentAAV7addressAA7AddressVvg'
+
+// Student.address.setter
+sil hidden [transparent] @$s7StudentAAV7addressAA7AddressVvs : $@convention(method) (@owned Address, @inout Student) -> () {
+// %0 "value"                                     // users: %11, %8, %4, %2
+// %1 "self"                                      // users: %5, %3
+bb0(%0 : $Address, %1 : $*Student):
+  debug_value %0 : $Address, let, name "value", argno 1 // id: %2
+  debug_value_addr %1 : $*Student, var, name "self", argno 2 // id: %3
+  retain_value %0 : $Address                      // id: %4
+  %5 = begin_access [modify] [static] %1 : $*Student // users: %10, %6
+  %6 = struct_element_addr %5 : $*Student, #Student.address // users: %8, %7
+  %7 = load %6 : $*Address                        // user: %9
+  store %0 to %6 : $*Address                      // id: %8
+  release_value %7 : $Address                     // id: %9
+  end_access %5 : $*Student                       // id: %10
+  release_value %0 : $Address                     // id: %11
+  %12 = tuple ()                                  // user: %13
+  return %12 : $()                                // id: %13
+} // end sil function '$s7StudentAAV7addressAA7AddressVvs'
+
+// Student.address.modify
+sil hidden [transparent] @$s7StudentAAV7addressAA7AddressVvM : $@yield_once @convention(method) (@inout Student) -> @yields @inout Address {
+// %0 "self"                                      // users: %2, %1
+bb0(%0 : $*Student):
+  debug_value_addr %0 : $*Student, var, name "self", argno 1 // id: %1
+  %2 = begin_access [modify] [static] %0 : $*Student // users: %5, %8, %3
+  %3 = struct_element_addr %2 : $*Student, #Student.address // user: %4
+  yield %3 : $*Address, resume bb1, unwind bb2    // id: %4
+
+bb1:                                              // Preds: bb0
+  end_access %2 : $*Student                       // id: %5
+  %6 = tuple ()                                   // user: %7
+  return %6 : $()                                 // id: %7
+
+bb2:                                              // Preds: bb0
+  end_access %2 : $*Student                       // id: %8
+  unwind                                          // id: %9
+} // end sil function '$s7StudentAAV7addressAA7AddressVvM'
+
+// Student.CodingKeys.init(rawValue:)
+sil hidden @$s7StudentAAV10CodingKeysO8rawValueADSgSS_tcfC : $@convention(method) (@owned String, @thin Student.CodingKeys.Type) -> Optional<Student.CodingKeys> {
+// %0 "rawValue"                                  // users: %80, %74, %39, %3
+// %1 "$metatype"
+bb0(%0 : $String, %1 : $@thin Student.CodingKeys.Type):
+  %2 = alloc_stack $Student.CodingKeys, var, name "self" // users: %78, %70, %59, %48, %81, %75
+  debug_value %0 : $String, let, name "rawValue", argno 1 // id: %3
+  %4 = integer_literal $Builtin.Word, 3           // user: %6
+  // function_ref _allocateUninitializedArray<A>(_:)
+  %5 = function_ref @$ss27_allocateUninitializedArrayySayxG_BptBwlF : $@convention(thin) <τ_0_0> (Builtin.Word) -> (@owned Array<τ_0_0>, Builtin.RawPointer) // user: %6
+  %6 = apply %5<StaticString>(%4) : $@convention(thin) <τ_0_0> (Builtin.Word) -> (@owned Array<τ_0_0>, Builtin.RawPointer) // users: %8, %7
+  %7 = tuple_extract %6 : $(Array<StaticString>, Builtin.RawPointer), 0 // users: %40, %39
+  %8 = tuple_extract %6 : $(Array<StaticString>, Builtin.RawPointer), 1 // user: %9
+  %9 = pointer_to_address %8 : $Builtin.RawPointer to [strict] $*StaticString // users: %17, %29, %19
+  %10 = string_literal utf8 "name"                // user: %12
+  %11 = integer_literal $Builtin.Word, 4          // user: %16
+  %12 = builtin "ptrtoint_Word"(%10 : $Builtin.RawPointer) : $Builtin.Word // user: %16
+  br bb1                                          // id: %13
+
+bb1:                                              // Preds: bb0
+  %14 = integer_literal $Builtin.Int8, 2          // user: %16
+  br bb2                                          // id: %15
+
+bb2:                                              // Preds: bb1
+  %16 = struct $StaticString (%12 : $Builtin.Word, %11 : $Builtin.Word, %14 : $Builtin.Int8) // user: %17
+  store %16 to %9 : $*StaticString                // id: %17
+  %18 = integer_literal $Builtin.Word, 1          // user: %19
+  %19 = index_addr %9 : $*StaticString, %18 : $Builtin.Word // user: %27
+  %20 = string_literal utf8 "age"                 // user: %22
+  %21 = integer_literal $Builtin.Word, 3          // user: %26
+  %22 = builtin "ptrtoint_Word"(%20 : $Builtin.RawPointer) : $Builtin.Word // user: %26
+  br bb3                                          // id: %23
+
+bb3:                                              // Preds: bb2
+  %24 = integer_literal $Builtin.Int8, 2          // user: %26
+  br bb4                                          // id: %25
+
+bb4:                                              // Preds: bb3
+  %26 = struct $StaticString (%22 : $Builtin.Word, %21 : $Builtin.Word, %24 : $Builtin.Int8) // user: %27
+  store %26 to %19 : $*StaticString               // id: %27
+  %28 = integer_literal $Builtin.Word, 2          // user: %29
+  %29 = index_addr %9 : $*StaticString, %28 : $Builtin.Word // user: %37
+  %30 = string_literal utf8 "addr"                // user: %32
+  %31 = integer_literal $Builtin.Word, 4          // user: %36
+  %32 = builtin "ptrtoint_Word"(%30 : $Builtin.RawPointer) : $Builtin.Word // user: %36
+  br bb5                                          // id: %33
+
+bb5:                                              // Preds: bb4
+  %34 = integer_literal $Builtin.Int8, 2          // user: %36
+  br bb6                                          // id: %35
+
+bb6:                                              // Preds: bb5
+  %36 = struct $StaticString (%32 : $Builtin.Word, %31 : $Builtin.Word, %34 : $Builtin.Int8) // user: %37
+  store %36 to %29 : $*StaticString               // id: %37
+  // function_ref _findStringSwitchCase(cases:string:)
+  %38 = function_ref @$ss21_findStringSwitchCase5cases6stringSiSays06StaticB0VG_SStF : $@convention(thin) (@guaranteed Array<StaticString>, @guaranteed String) -> Int // user: %39
+  %39 = apply %38(%7, %0) : $@convention(thin) (@guaranteed Array<StaticString>, @guaranteed String) -> Int // users: %65, %54, %43, %63, %52, %41
+  release_value %7 : $Array<StaticString>         // id: %40
+  debug_value %39 : $Int, let, name "$match"      // id: %41
+  %42 = integer_literal $Builtin.Int64, 0         // user: %44
+  %43 = struct_extract %39 : $Int, #Int._value    // user: %44
+  %44 = builtin "cmp_eq_Int64"(%42 : $Builtin.Int64, %43 : $Builtin.Int64) : $Builtin.Int1 // user: %45
+  cond_br %44, bb7, bb8                           // id: %45
+
+bb7:                                              // Preds: bb6
+  %46 = metatype $@thin Student.CodingKeys.Type
+  %47 = enum $Student.CodingKeys, #Student.CodingKeys.name!enumelt // user: %49
+  %48 = begin_access [modify] [static] %2 : $*Student.CodingKeys // users: %49, %50
+  store %47 to %48 : $*Student.CodingKeys         // id: %49
+  end_access %48 : $*Student.CodingKeys           // id: %50
+  br bb13                                         // id: %51
+
+bb8:                                              // Preds: bb6
+  debug_value %39 : $Int, let, name "$match"      // id: %52
+  %53 = integer_literal $Builtin.Int64, 1         // user: %55
+  %54 = struct_extract %39 : $Int, #Int._value    // user: %55
+  %55 = builtin "cmp_eq_Int64"(%53 : $Builtin.Int64, %54 : $Builtin.Int64) : $Builtin.Int1 // user: %56
+  cond_br %55, bb9, bb10                          // id: %56
+
+bb9:                                              // Preds: bb8
+  %57 = metatype $@thin Student.CodingKeys.Type
+  %58 = enum $Student.CodingKeys, #Student.CodingKeys.age!enumelt // user: %60
+  %59 = begin_access [modify] [static] %2 : $*Student.CodingKeys // users: %60, %61
+  store %58 to %59 : $*Student.CodingKeys         // id: %60
+  end_access %59 : $*Student.CodingKeys           // id: %61
+  br bb13                                         // id: %62
+
+bb10:                                             // Preds: bb8
+  debug_value %39 : $Int, let, name "$match"      // id: %63
+  %64 = integer_literal $Builtin.Int64, 2         // user: %66
+  %65 = struct_extract %39 : $Int, #Int._value    // user: %66
+  %66 = builtin "cmp_eq_Int64"(%64 : $Builtin.Int64, %65 : $Builtin.Int64) : $Builtin.Int1 // user: %67
+  cond_br %66, bb11, bb12                         // id: %67
+
+bb11:                                             // Preds: bb10
+  %68 = metatype $@thin Student.CodingKeys.Type
+  %69 = enum $Student.CodingKeys, #Student.CodingKeys.address!enumelt // user: %71
+  %70 = begin_access [modify] [static] %2 : $*Student.CodingKeys // users: %71, %72
+  store %69 to %70 : $*Student.CodingKeys         // id: %71
+  end_access %70 : $*Student.CodingKeys           // id: %72
+  br bb13                                         // id: %73
+
+bb12:                                             // Preds: bb10
+  release_value %0 : $String                      // id: %74
+  dealloc_stack %2 : $*Student.CodingKeys         // id: %75
+  %76 = enum $Optional<Student.CodingKeys>, #Optional.none!enumelt // user: %77
+  br bb14(%76 : $Optional<Student.CodingKeys>)    // id: %77
+
+bb13:                                             // Preds: bb11 bb9 bb7
+  %78 = load %2 : $*Student.CodingKeys            // user: %79
+  %79 = enum $Optional<Student.CodingKeys>, #Optional.some!enumelt, %78 : $Student.CodingKeys // user: %82
+  release_value %0 : $String                      // id: %80
+  dealloc_stack %2 : $*Student.CodingKeys         // id: %81
+  br bb14(%79 : $Optional<Student.CodingKeys>)    // id: %82
+
+// %83                                            // user: %84
+bb14(%83 : $Optional<Student.CodingKeys>):        // Preds: bb13 bb12
+  return %83 : $Optional<Student.CodingKeys>      // id: %84
+} // end sil function '$s7StudentAAV10CodingKeysO8rawValueADSgSS_tcfC'
+
+// _allocateUninitializedArray<A>(_:)
+sil [serialized] [always_inline] [_semantics "array.uninitialized_intrinsic"] @$ss27_allocateUninitializedArrayySayxG_BptBwlF : $@convention(thin) <τ_0_0> (Builtin.Word) -> (@owned Array<τ_0_0>, Builtin.RawPointer)
+
+// StaticString.init(_builtinStringLiteral:utf8CodeUnitCount:isASCII:)
+sil public_external [transparent] [serialized] [readonly] @$ss12StaticStringV08_builtinB7Literal17utf8CodeUnitCount7isASCIIABBp_BwBi1_tcfC : $@convention(method) (Builtin.RawPointer, Builtin.Word, Builtin.Int1, @thin StaticString.Type) -> StaticString {
+// %0                                             // user: %4
+// %1                                             // user: %11
+// %2                                             // user: %5
+bb0(%0 : $Builtin.RawPointer, %1 : $Builtin.Word, %2 : $Builtin.Int1, %3 : $@thin StaticString.Type):
+  %4 = builtin "ptrtoint_Word"(%0 : $Builtin.RawPointer) : $Builtin.Word // user: %11
+  cond_br %2, bb2, bb1                            // id: %5
+
+bb1:                                              // Preds: bb0
+  %6 = integer_literal $Builtin.Int8, 0           // user: %7
+  br bb3(%6 : $Builtin.Int8)                      // id: %7
+
+bb2:                                              // Preds: bb0
+  %8 = integer_literal $Builtin.Int8, 2           // user: %9
+  br bb3(%8 : $Builtin.Int8)                      // id: %9
+
+// %10                                            // user: %11
+bb3(%10 : $Builtin.Int8):                         // Preds: bb2 bb1
+  %11 = struct $StaticString (%4 : $Builtin.Word, %1 : $Builtin.Word, %10 : $Builtin.Int8) // user: %12
+  return %11 : $StaticString                      // id: %12
+} // end sil function '$ss12StaticStringV08_builtinB7Literal17utf8CodeUnitCount7isASCIIABBp_BwBi1_tcfC'
+
+// _findStringSwitchCase(cases:string:)
+sil [_semantics "findStringSwitchCase"] @$ss21_findStringSwitchCase5cases6stringSiSays06StaticB0VG_SStF : $@convention(thin) (@guaranteed Array<StaticString>, @guaranteed String) -> Int
+
+// Int.init(_builtinIntegerLiteral:)
+sil public_external [transparent] [serialized] @$sSi22_builtinIntegerLiteralSiBI_tcfC : $@convention(method) (Builtin.IntLiteral, @thin Int.Type) -> Int {
+// %0                                             // user: %2
+bb0(%0 : $Builtin.IntLiteral, %1 : $@thin Int.Type):
+  %2 = builtin "s_to_s_checked_trunc_IntLiteral_Int64"(%0 : $Builtin.IntLiteral) : $(Builtin.Int64, Builtin.Int1) // user: %3
+  %3 = tuple_extract %2 : $(Builtin.Int64, Builtin.Int1), 0 // user: %4
+  %4 = struct $Int (%3 : $Builtin.Int64)          // user: %5
+  return %4 : $Int                                // id: %5
+} // end sil function '$sSi22_builtinIntegerLiteralSiBI_tcfC'
+
+// ~= infix<A>(_:_:)
+sil public_external [transparent] [serialized] @$ss2teoiySbx_xtSQRzlF : $@convention(thin) <T where T : Equatable> (@in_guaranteed T, @in_guaranteed T) -> Bool {
+// %0                                             // user: %4
+// %1                                             // user: %4
+bb0(%0 : $*T, %1 : $*T):
+  %2 = metatype $@thick T.Type                    // user: %4
+  %3 = witness_method $T, #Equatable."==" : <Self where Self : Equatable> (Self.Type) -> (Self, Self) -> Bool : $@convention(witness_method: Equatable) <τ_0_0 where τ_0_0 : Equatable> (@in_guaranteed τ_0_0, @in_guaranteed τ_0_0, @thick τ_0_0.Type) -> Bool // user: %4
+  %4 = apply %3<T>(%0, %1, %2) : $@convention(witness_method: Equatable) <τ_0_0 where τ_0_0 : Equatable> (@in_guaranteed τ_0_0, @in_guaranteed τ_0_0, @thick τ_0_0.Type) -> Bool // user: %5
+  return %4 : $Bool                               // id: %5
+} // end sil function '$ss2teoiySbx_xtSQRzlF'
+
+// Student.CodingKeys.rawValue.getter
+sil hidden @$s7StudentAAV10CodingKeysO8rawValueSSvg : $@convention(method) (Student.CodingKeys) -> @owned String {
+// %0 "self"                                      // users: %2, %1
+bb0(%0 : $Student.CodingKeys):
+  debug_value %0 : $Student.CodingKeys, let, name "self", argno 1 // id: %1
+  switch_enum %0 : $Student.CodingKeys, case #Student.CodingKeys.name!enumelt: bb1, case #Student.CodingKeys.age!enumelt: bb2, case #Student.CodingKeys.address!enumelt: bb3 // id: %2
+
+bb1:                                              // Preds: bb0
+  %3 = string_literal utf8 "name"                 // user: %8
+  %4 = integer_literal $Builtin.Word, 4           // user: %8
+  %5 = integer_literal $Builtin.Int1, -1          // user: %8
+  %6 = metatype $@thin String.Type                // user: %8
+  // function_ref String.init(_builtinStringLiteral:utf8CodeUnitCount:isASCII:)
+  %7 = function_ref @$sSS21_builtinStringLiteral17utf8CodeUnitCount7isASCIISSBp_BwBi1_tcfC : $@convention(method) (Builtin.RawPointer, Builtin.Word, Builtin.Int1, @thin String.Type) -> @owned String // user: %8
+  %8 = apply %7(%3, %4, %5, %6) : $@convention(method) (Builtin.RawPointer, Builtin.Word, Builtin.Int1, @thin String.Type) -> @owned String // user: %9
+  br bb4(%8 : $String)                            // id: %9
+
+bb2:                                              // Preds: bb0
+  %10 = string_literal utf8 "age"                 // user: %15
+  %11 = integer_literal $Builtin.Word, 3          // user: %15
+  %12 = integer_literal $Builtin.Int1, -1         // user: %15
+  %13 = metatype $@thin String.Type               // user: %15
+  // function_ref String.init(_builtinStringLiteral:utf8CodeUnitCount:isASCII:)
+  %14 = function_ref @$sSS21_builtinStringLiteral17utf8CodeUnitCount7isASCIISSBp_BwBi1_tcfC : $@convention(method) (Builtin.RawPointer, Builtin.Word, Builtin.Int1, @thin String.Type) -> @owned String // user: %15
+  %15 = apply %14(%10, %11, %12, %13) : $@convention(method) (Builtin.RawPointer, Builtin.Word, Builtin.Int1, @thin String.Type) -> @owned String // user: %16
+  br bb4(%15 : $String)                           // id: %16
+
+bb3:                                              // Preds: bb0
+  %17 = string_literal utf8 "addr"                // user: %22
+  %18 = integer_literal $Builtin.Word, 4          // user: %22
+  %19 = integer_literal $Builtin.Int1, -1         // user: %22
+  %20 = metatype $@thin String.Type               // user: %22
+  // function_ref String.init(_builtinStringLiteral:utf8CodeUnitCount:isASCII:)
+  %21 = function_ref @$sSS21_builtinStringLiteral17utf8CodeUnitCount7isASCIISSBp_BwBi1_tcfC : $@convention(method) (Builtin.RawPointer, Builtin.Word, Builtin.Int1, @thin String.Type) -> @owned String // user: %22
+  %22 = apply %21(%17, %18, %19, %20) : $@convention(method) (Builtin.RawPointer, Builtin.Word, Builtin.Int1, @thin String.Type) -> @owned String // user: %23
+  br bb4(%22 : $String)                           // id: %23
+
+// %24                                            // user: %25
+bb4(%24 : $String):                               // Preds: bb3 bb2 bb1
+  return %24 : $String                            // id: %25
+} // end sil function '$s7StudentAAV10CodingKeysO8rawValueSSvg'
+
+// String.init(_builtinStringLiteral:utf8CodeUnitCount:isASCII:)
+sil [serialized] [always_inline] [readonly] [_semantics "string.makeUTF8"] @$sSS21_builtinStringLiteral17utf8CodeUnitCount7isASCIISSBp_BwBi1_tcfC : $@convention(method) (Builtin.RawPointer, Builtin.Word, Builtin.Int1, @thin String.Type) -> @owned String
+
+// Student.CodingKeys.stringValue.getter
+sil hidden @$s7StudentAAV10CodingKeysO11stringValueSSvg : $@convention(method) (Student.CodingKeys) -> @owned String {
+// %0 "self"                                      // users: %3, %1
+bb0(%0 : $Student.CodingKeys):
+  debug_value %0 : $Student.CodingKeys, let, name "self", argno 1 // id: %1
+  // function_ref Student.CodingKeys.rawValue.getter
+  %2 = function_ref @$s7StudentAAV10CodingKeysO8rawValueSSvg : $@convention(method) (Student.CodingKeys) -> @owned String // user: %3
+  %3 = apply %2(%0) : $@convention(method) (Student.CodingKeys) -> @owned String // user: %4
+  return %3 : $String                             // id: %4
+} // end sil function '$s7StudentAAV10CodingKeysO11stringValueSSvg'
+
+// Student.CodingKeys.init(stringValue:)
+sil hidden @$s7StudentAAV10CodingKeysO11stringValueADSgSS_tcfC : $@convention(method) (@owned String, @thin Student.CodingKeys.Type) -> Optional<Student.CodingKeys> {
+// %0 "stringValue"                               // users: %18, %11, %6, %4, %3
+// %1 "$metatype"                                 // user: %6
+bb0(%0 : $String, %1 : $@thin Student.CodingKeys.Type):
+  %2 = alloc_stack $Student.CodingKeys, var, name "self" // users: %16, %19, %12
+  debug_value %0 : $String, let, name "stringValue", argno 1 // id: %3
+  retain_value %0 : $String                       // id: %4
+  // function_ref Student.CodingKeys.init(rawValue:)
+  %5 = function_ref @$s7StudentAAV10CodingKeysO8rawValueADSgSS_tcfC : $@convention(method) (@owned String, @thin Student.CodingKeys.Type) -> Optional<Student.CodingKeys> // user: %6
+  %6 = apply %5(%0, %1) : $@convention(method) (@owned String, @thin Student.CodingKeys.Type) -> Optional<Student.CodingKeys> // users: %15, %9
+  %7 = integer_literal $Builtin.Int1, -1          // user: %9
+  %8 = integer_literal $Builtin.Int1, 0           // user: %9
+  %9 = select_enum %6 : $Optional<Student.CodingKeys>, case #Optional.some!enumelt: %7, default %8 : $Builtin.Int1 // user: %10
+  cond_br %9, bb2, bb1                            // id: %10
+
+bb1:                                              // Preds: bb0
+  release_value %0 : $String                      // id: %11
+  dealloc_stack %2 : $*Student.CodingKeys         // id: %12
+  %13 = enum $Optional<Student.CodingKeys>, #Optional.none!enumelt // user: %14
+  br bb3(%13 : $Optional<Student.CodingKeys>)     // id: %14
+
+bb2:                                              // Preds: bb0
+  %15 = unchecked_enum_data %6 : $Optional<Student.CodingKeys>, #Optional.some!enumelt // users: %16, %17
+  store %15 to %2 : $*Student.CodingKeys          // id: %16
+  %17 = enum $Optional<Student.CodingKeys>, #Optional.some!enumelt, %15 : $Student.CodingKeys // user: %20
+  release_value %0 : $String                      // id: %18
+  dealloc_stack %2 : $*Student.CodingKeys         // id: %19
+  br bb3(%17 : $Optional<Student.CodingKeys>)     // id: %20
+
+// %21                                            // user: %22
+bb3(%21 : $Optional<Student.CodingKeys>):         // Preds: bb2 bb1
+  return %21 : $Optional<Student.CodingKeys>      // id: %22
+} // end sil function '$s7StudentAAV10CodingKeysO11stringValueADSgSS_tcfC'
+
+// Student.CodingKeys.intValue.getter
+sil hidden @$s7StudentAAV10CodingKeysO8intValueSiSgvg : $@convention(method) (Student.CodingKeys) -> Optional<Int> {
+// %0 "self"                                      // user: %1
+bb0(%0 : $Student.CodingKeys):
+  debug_value %0 : $Student.CodingKeys, let, name "self", argno 1 // id: %1
+  %2 = enum $Optional<Int>, #Optional.none!enumelt // user: %3
+  return %2 : $Optional<Int>                      // id: %3
+} // end sil function '$s7StudentAAV10CodingKeysO8intValueSiSgvg'
+
+// Student.CodingKeys.init(intValue:)
+sil hidden @$s7StudentAAV10CodingKeysO8intValueADSgSi_tcfC : $@convention(method) (Int, @thin Student.CodingKeys.Type) -> Optional<Student.CodingKeys> {
+// %0 "intValue"                                  // user: %3
+// %1 "$metatype"
+bb0(%0 : $Int, %1 : $@thin Student.CodingKeys.Type):
+  %2 = alloc_stack $Student.CodingKeys, let, name "self" // user: %4
+  debug_value %0 : $Int, let, name "intValue", argno 1 // id: %3
+  dealloc_stack %2 : $*Student.CodingKeys         // id: %4
+  %5 = enum $Optional<Student.CodingKeys>, #Optional.none!enumelt // user: %6
+  return %5 : $Optional<Student.CodingKeys>       // id: %6
+} // end sil function '$s7StudentAAV10CodingKeysO8intValueADSgSi_tcfC'
+
+// protocol witness for static Equatable.== infix(_:_:) in conformance Student.CodingKeys
+sil private [transparent] [thunk] @$s7StudentAAV10CodingKeysOSQAASQ2eeoiySbx_xtFZTW : $@convention(witness_method: Equatable) (@in_guaranteed Student.CodingKeys, @in_guaranteed Student.CodingKeys, @thick Student.CodingKeys.Type) -> Bool {
+// %0                                             // user: %4
+// %1                                             // user: %4
+bb0(%0 : $*Student.CodingKeys, %1 : $*Student.CodingKeys, %2 : $@thick Student.CodingKeys.Type):
+  // function_ref == infix<A>(_:_:)
+  %3 = function_ref @$ss2eeoiySbx_xtSYRzSQ8RawValueRpzlF : $@convention(thin) <τ_0_0 where τ_0_0 : RawRepresentable, τ_0_0.RawValue : Equatable> (@in_guaranteed τ_0_0, @in_guaranteed τ_0_0) -> Bool // user: %4
+  %4 = apply %3<Student.CodingKeys>(%0, %1) : $@convention(thin) <τ_0_0 where τ_0_0 : RawRepresentable, τ_0_0.RawValue : Equatable> (@in_guaranteed τ_0_0, @in_guaranteed τ_0_0) -> Bool // user: %5
+  return %4 : $Bool                               // id: %5
+} // end sil function '$s7StudentAAV10CodingKeysOSQAASQ2eeoiySbx_xtFZTW'
+
+// == infix<A>(_:_:)
+sil [serialized] @$ss2eeoiySbx_xtSYRzSQ8RawValueRpzlF : $@convention(thin) <τ_0_0 where τ_0_0 : RawRepresentable, τ_0_0.RawValue : Equatable> (@in_guaranteed τ_0_0, @in_guaranteed τ_0_0) -> Bool
+
+// protocol witness for Hashable.hashValue.getter in conformance Student.CodingKeys
+sil private [transparent] [thunk] @$s7StudentAAV10CodingKeysOSHAASH9hashValueSivgTW : $@convention(witness_method: Hashable) (@in_guaranteed Student.CodingKeys) -> Int {
+// %0                                             // user: %2
+bb0(%0 : $*Student.CodingKeys):
+  // function_ref RawRepresentable<>.hashValue.getter
+  %1 = function_ref @$sSYsSHRzSH8RawValueSYRpzrlE04hashB0Sivg : $@convention(method) <τ_0_0 where τ_0_0 : Hashable, τ_0_0 : RawRepresentable, τ_0_0.RawValue : Hashable> (@in_guaranteed τ_0_0) -> Int // user: %2
+  %2 = apply %1<Student.CodingKeys>(%0) : $@convention(method) <τ_0_0 where τ_0_0 : Hashable, τ_0_0 : RawRepresentable, τ_0_0.RawValue : Hashable> (@in_guaranteed τ_0_0) -> Int // user: %3
+  return %2 : $Int                                // id: %3
+} // end sil function '$s7StudentAAV10CodingKeysOSHAASH9hashValueSivgTW'
+
+// RawRepresentable<>.hashValue.getter
+sil [serialized] @$sSYsSHRzSH8RawValueSYRpzrlE04hashB0Sivg : $@convention(method) <τ_0_0 where τ_0_0 : Hashable, τ_0_0 : RawRepresentable, τ_0_0.RawValue : Hashable> (@in_guaranteed τ_0_0) -> Int
+
+// protocol witness for Hashable.hash(into:) in conformance Student.CodingKeys
+sil private [transparent] [thunk] @$s7StudentAAV10CodingKeysOSHAASH4hash4intoys6HasherVz_tFTW : $@convention(witness_method: Hashable) (@inout Hasher, @in_guaranteed Student.CodingKeys) -> () {
+// %0                                             // user: %3
+// %1                                             // user: %3
+bb0(%0 : $*Hasher, %1 : $*Student.CodingKeys):
+  // function_ref RawRepresentable<>.hash(into:)
+  %2 = function_ref @$sSYsSHRzSH8RawValueSYRpzrlE4hash4intoys6HasherVz_tF : $@convention(method) <τ_0_0 where τ_0_0 : Hashable, τ_0_0 : RawRepresentable, τ_0_0.RawValue : Hashable> (@inout Hasher, @in_guaranteed τ_0_0) -> () // user: %3
+  %3 = apply %2<Student.CodingKeys>(%0, %1) : $@convention(method) <τ_0_0 where τ_0_0 : Hashable, τ_0_0 : RawRepresentable, τ_0_0.RawValue : Hashable> (@inout Hasher, @in_guaranteed τ_0_0) -> ()
+  %4 = tuple ()                                   // user: %5
+  return %4 : $()                                 // id: %5
+} // end sil function '$s7StudentAAV10CodingKeysOSHAASH4hash4intoys6HasherVz_tFTW'
+
+// RawRepresentable<>.hash(into:)
+sil [serialized] @$sSYsSHRzSH8RawValueSYRpzrlE4hash4intoys6HasherVz_tF : $@convention(method) <τ_0_0 where τ_0_0 : Hashable, τ_0_0 : RawRepresentable, τ_0_0.RawValue : Hashable> (@inout Hasher, @in_guaranteed τ_0_0) -> ()
+
+// protocol witness for Hashable._rawHashValue(seed:) in conformance Student.CodingKeys
+sil private [transparent] [thunk] @$s7StudentAAV10CodingKeysOSHAASH13_rawHashValue4seedS2i_tFTW : $@convention(witness_method: Hashable) (Int, @in_guaranteed Student.CodingKeys) -> Int {
+// %0                                             // user: %3
+// %1                                             // user: %3
+bb0(%0 : $Int, %1 : $*Student.CodingKeys):
+  // function_ref RawRepresentable<>._rawHashValue(seed:)
+  %2 = function_ref @$sSYsSHRzSH8RawValueSYRpzrlE08_rawHashB04seedS2i_tF : $@convention(method) <τ_0_0 where τ_0_0 : Hashable, τ_0_0 : RawRepresentable, τ_0_0.RawValue : Hashable> (Int, @in_guaranteed τ_0_0) -> Int // user: %3
+  %3 = apply %2<Student.CodingKeys>(%0, %1) : $@convention(method) <τ_0_0 where τ_0_0 : Hashable, τ_0_0 : RawRepresentable, τ_0_0.RawValue : Hashable> (Int, @in_guaranteed τ_0_0) -> Int // user: %4
+  return %3 : $Int                                // id: %4
+} // end sil function '$s7StudentAAV10CodingKeysOSHAASH13_rawHashValue4seedS2i_tFTW'
+
+// RawRepresentable<>._rawHashValue(seed:)
+sil [serialized] @$sSYsSHRzSH8RawValueSYRpzrlE08_rawHashB04seedS2i_tF : $@convention(method) <τ_0_0 where τ_0_0 : Hashable, τ_0_0 : RawRepresentable, τ_0_0.RawValue : Hashable> (Int, @in_guaranteed τ_0_0) -> Int
+
+// protocol witness for RawRepresentable.init(rawValue:) in conformance Student.CodingKeys
+sil private [transparent] [thunk] @$s7StudentAAV10CodingKeysOSYAASY8rawValuexSg03RawE0Qz_tcfCTW : $@convention(witness_method: RawRepresentable) (@in String, @thick Student.CodingKeys.Type) -> @out Optional<Student.CodingKeys> {
+// %0                                             // user: %7
+// %1                                             // user: %3
+bb0(%0 : $*Optional<Student.CodingKeys>, %1 : $*String, %2 : $@thick Student.CodingKeys.Type):
+  %3 = load %1 : $*String                         // user: %6
+  %4 = metatype $@thin Student.CodingKeys.Type    // user: %6
+  // function_ref Student.CodingKeys.init(rawValue:)
+  %5 = function_ref @$s7StudentAAV10CodingKeysO8rawValueADSgSS_tcfC : $@convention(method) (@owned String, @thin Student.CodingKeys.Type) -> Optional<Student.CodingKeys> // user: %6
+  %6 = apply %5(%3, %4) : $@convention(method) (@owned String, @thin Student.CodingKeys.Type) -> Optional<Student.CodingKeys> // user: %7
+  store %6 to %0 : $*Optional<Student.CodingKeys> // id: %7
+  %8 = tuple ()                                   // user: %9
+  return %8 : $()                                 // id: %9
+} // end sil function '$s7StudentAAV10CodingKeysOSYAASY8rawValuexSg03RawE0Qz_tcfCTW'
+
+// protocol witness for RawRepresentable.rawValue.getter in conformance Student.CodingKeys
+sil private [transparent] [thunk] @$s7StudentAAV10CodingKeysOSYAASY8rawValue03RawE0QzvgTW : $@convention(witness_method: RawRepresentable) (@in_guaranteed Student.CodingKeys) -> @out String {
+// %0                                             // user: %5
+// %1                                             // user: %2
+bb0(%0 : $*String, %1 : $*Student.CodingKeys):
+  %2 = load %1 : $*Student.CodingKeys             // user: %4
+  // function_ref Student.CodingKeys.rawValue.getter
+  %3 = function_ref @$s7StudentAAV10CodingKeysO8rawValueSSvg : $@convention(method) (Student.CodingKeys) -> @owned String // user: %4
+  %4 = apply %3(%2) : $@convention(method) (Student.CodingKeys) -> @owned String // user: %5
+  store %4 to %0 : $*String                       // id: %5
+  %6 = tuple ()                                   // user: %7
+  return %6 : $()                                 // id: %7
+} // end sil function '$s7StudentAAV10CodingKeysOSYAASY8rawValue03RawE0QzvgTW'
+
+// protocol witness for CodingKey.stringValue.getter in conformance Student.CodingKeys
+sil private [transparent] [thunk] @$s7StudentAAV10CodingKeysOs0B3KeyAAsAEP11stringValueSSvgTW : $@convention(witness_method: CodingKey) (@in_guaranteed Student.CodingKeys) -> @owned String {
+// %0                                             // user: %1
+bb0(%0 : $*Student.CodingKeys):
+  %1 = load %0 : $*Student.CodingKeys             // user: %3
+  // function_ref Student.CodingKeys.stringValue.getter
+  %2 = function_ref @$s7StudentAAV10CodingKeysO11stringValueSSvg : $@convention(method) (Student.CodingKeys) -> @owned String // user: %3
+  %3 = apply %2(%1) : $@convention(method) (Student.CodingKeys) -> @owned String // user: %4
+  return %3 : $String                             // id: %4
+} // end sil function '$s7StudentAAV10CodingKeysOs0B3KeyAAsAEP11stringValueSSvgTW'
+
+// protocol witness for CodingKey.init(stringValue:) in conformance Student.CodingKeys
+sil private [transparent] [thunk] @$s7StudentAAV10CodingKeysOs0B3KeyAAsAEP11stringValuexSgSS_tcfCTW : $@convention(witness_method: CodingKey) (@owned String, @thick Student.CodingKeys.Type) -> @out Optional<Student.CodingKeys> {
+// %0                                             // user: %6
+// %1                                             // user: %5
+bb0(%0 : $*Optional<Student.CodingKeys>, %1 : $String, %2 : $@thick Student.CodingKeys.Type):
+  %3 = metatype $@thin Student.CodingKeys.Type    // user: %5
+  // function_ref Student.CodingKeys.init(stringValue:)
+  %4 = function_ref @$s7StudentAAV10CodingKeysO11stringValueADSgSS_tcfC : $@convention(method) (@owned String, @thin Student.CodingKeys.Type) -> Optional<Student.CodingKeys> // user: %5
+  %5 = apply %4(%1, %3) : $@convention(method) (@owned String, @thin Student.CodingKeys.Type) -> Optional<Student.CodingKeys> // user: %6
+  store %5 to %0 : $*Optional<Student.CodingKeys> // id: %6
+  %7 = tuple ()                                   // user: %8
+  return %7 : $()                                 // id: %8
+} // end sil function '$s7StudentAAV10CodingKeysOs0B3KeyAAsAEP11stringValuexSgSS_tcfCTW'
+
+// protocol witness for CodingKey.intValue.getter in conformance Student.CodingKeys
+sil private [transparent] [thunk] @$s7StudentAAV10CodingKeysOs0B3KeyAAsAEP8intValueSiSgvgTW : $@convention(witness_method: CodingKey) (@in_guaranteed Student.CodingKeys) -> Optional<Int> {
+// %0                                             // user: %1
+bb0(%0 : $*Student.CodingKeys):
+  %1 = load %0 : $*Student.CodingKeys             // user: %3
+  // function_ref Student.CodingKeys.intValue.getter
+  %2 = function_ref @$s7StudentAAV10CodingKeysO8intValueSiSgvg : $@convention(method) (Student.CodingKeys) -> Optional<Int> // user: %3
+  %3 = apply %2(%1) : $@convention(method) (Student.CodingKeys) -> Optional<Int> // user: %4
+  return %3 : $Optional<Int>                      // id: %4
+} // end sil function '$s7StudentAAV10CodingKeysOs0B3KeyAAsAEP8intValueSiSgvgTW'
+
+// protocol witness for CodingKey.init(intValue:) in conformance Student.CodingKeys
+sil private [transparent] [thunk] @$s7StudentAAV10CodingKeysOs0B3KeyAAsAEP8intValuexSgSi_tcfCTW : $@convention(witness_method: CodingKey) (Int, @thick Student.CodingKeys.Type) -> @out Optional<Student.CodingKeys> {
+// %0                                             // user: %6
+// %1                                             // user: %5
+bb0(%0 : $*Optional<Student.CodingKeys>, %1 : $Int, %2 : $@thick Student.CodingKeys.Type):
+  %3 = metatype $@thin Student.CodingKeys.Type    // user: %5
+  // function_ref Student.CodingKeys.init(intValue:)
+  %4 = function_ref @$s7StudentAAV10CodingKeysO8intValueADSgSi_tcfC : $@convention(method) (Int, @thin Student.CodingKeys.Type) -> Optional<Student.CodingKeys> // user: %5
+  %5 = apply %4(%1, %3) : $@convention(method) (Int, @thin Student.CodingKeys.Type) -> Optional<Student.CodingKeys> // user: %6
+  store %5 to %0 : $*Optional<Student.CodingKeys> // id: %6
+  %7 = tuple ()                                   // user: %8
+  return %7 : $()                                 // id: %8
+} // end sil function '$s7StudentAAV10CodingKeysOs0B3KeyAAsAEP8intValuexSgSi_tcfCTW'
+
+// protocol witness for CustomDebugStringConvertible.debugDescription.getter in conformance Student.CodingKeys
+sil private [transparent] [thunk] @$s7StudentAAV10CodingKeysOs28CustomDebugStringConvertibleAAsAEP16debugDescriptionSSvgTW : $@convention(witness_method: CustomDebugStringConvertible) (@in_guaranteed Student.CodingKeys) -> @owned String {
+// %0                                             // user: %2
+bb0(%0 : $*Student.CodingKeys):
+  // function_ref CodingKey.debugDescription.getter
+  %1 = function_ref @$ss9CodingKeyPsE16debugDescriptionSSvg : $@convention(method) <τ_0_0 where τ_0_0 : CodingKey> (@in_guaranteed τ_0_0) -> @owned String // user: %2
+  %2 = apply %1<Student.CodingKeys>(%0) : $@convention(method) <τ_0_0 where τ_0_0 : CodingKey> (@in_guaranteed τ_0_0) -> @owned String // user: %3
+  return %2 : $String                             // id: %3
+} // end sil function '$s7StudentAAV10CodingKeysOs28CustomDebugStringConvertibleAAsAEP16debugDescriptionSSvgTW'
+
+// protocol witness for CustomStringConvertible.description.getter in conformance Student.CodingKeys
+sil private [transparent] [thunk] @$s7StudentAAV10CodingKeysOs23CustomStringConvertibleAAsAEP11descriptionSSvgTW : $@convention(witness_method: CustomStringConvertible) (@in_guaranteed Student.CodingKeys) -> @owned String {
+// %0                                             // user: %2
+bb0(%0 : $*Student.CodingKeys):
+  // function_ref CodingKey.description.getter
+  %1 = function_ref @$ss9CodingKeyPsE11descriptionSSvg : $@convention(method) <τ_0_0 where τ_0_0 : CodingKey> (@in_guaranteed τ_0_0) -> @owned String // user: %2
+  %2 = apply %1<Student.CodingKeys>(%0) : $@convention(method) <τ_0_0 where τ_0_0 : CodingKey> (@in_guaranteed τ_0_0) -> @owned String // user: %3
+  return %2 : $String                             // id: %3
+} // end sil function '$s7StudentAAV10CodingKeysOs23CustomStringConvertibleAAsAEP11descriptionSSvgTW'
+
+// Student.init(name:age:address:)
+sil hidden @$s7StudentAAV4name3age7addressABSS_SiAA7AddressVtcfC : $@convention(method) (@owned String, Int, @owned Address, @thin Student.Type) -> @owned Student {
+// %0 "$implicit_value"                           // user: %4
+// %1 "$implicit_value"                           // user: %4
+// %2 "$implicit_value"                           // user: %4
+// %3 "$metatype"
+bb0(%0 : $String, %1 : $Int, %2 : $Address, %3 : $@thin Student.Type):
+  %4 = struct $Student (%0 : $String, %1 : $Int, %2 : $Address) // user: %5
+  return %4 : $Student                            // id: %5
+} // end sil function '$s7StudentAAV4name3age7addressABSS_SiAA7AddressVtcfC'
+
+// Student.init(from:)
+sil hidden @$s7StudentAAV4fromABs7Decoder_p_tKcfC : $@convention(method) (@in Decoder, @thin Student.Type) -> (@owned Student, @error Error) {
+// %0 "decoder"                                   // users: %97, %70, %9, %6
+// %1 "$metatype"
+bb0(%0 : $*Decoder, %1 : $@thin Student.Type):
+  %2 = alloc_stack $Builtin.Int3                  // users: %105, %98, %59, %27, %5, %115, %73
+  %3 = alloc_stack [dynamic_lifetime] $Student, var, name "self" // users: %56, %40, %24, %71, %101, %110, %114, %72
+  %4 = integer_literal $Builtin.Int3, 0           // user: %5
+  store %4 to %2 : $*Builtin.Int3                 // id: %5
+  debug_value_addr %0 : $*Decoder, let, name "decoder", argno 1 // id: %6
+  debug_value undef : $Error, var, name "$error", argno 2 // id: %7
+
+  // 初始化 KeyedDecodingContainer 内存布局
+  %8 = alloc_stack $KeyedDecodingContainer<Student.CodingKeys>, let, name "container" // users: %65, %64, %52, %94, %93, %37, %87, %86, %21, %81, %80, %13, %76
+
+  // 获取遵循 Decoder 协议的实体，即 __JSONDecoder
+  %9 = open_existential_addr immutable_access %0 : $*Decoder to $*@opened("563E18FE-301D-11EC-B195-AC87A33022EC") Decoder // users: %13, %13, %12
+  %10 = metatype $@thin Student.CodingKeys.Type
+  %11 = metatype $@thick Student.CodingKeys.Type  // user: %13
+
+  // 获取 __JSONDecoder 的 container 方法的地址，该方法的类型是 <Self where Self : Decoder><Key where Key : CodingKey> (Self) -> (Key.Type) throws -> KeyedDecodingContainer<Key>
+  %12 = witness_method $@opened("563E18FE-301D-11EC-B195-AC87A33022EC") Decoder, #Decoder.container : <Self where Self : Decoder><Key where Key : CodingKey> (Self) -> (Key.Type) throws -> KeyedDecodingContainer<Key>, %9 : $*@opened("563E18FE-301D-11EC-B195-AC87A33022EC") Decoder : $@convention(witness_method: Decoder) <τ_0_0 where τ_0_0 : Decoder><τ_1_0 where τ_1_0 : CodingKey> (@thick τ_1_0.Type, @in_guaranteed τ_0_0) -> (@out KeyedDecodingContainer<τ_1_0>, @error Error) // type-defs: %9; user: %13
+
+  // 执行 __JSONDecoder 的 container 方法
+  try_apply %12<@opened("563E18FE-301D-11EC-B195-AC87A33022EC") Decoder, Student.CodingKeys>(%8, %11, %9) : $@convention(witness_method: Decoder) <τ_0_0 where τ_0_0 : Decoder><τ_1_0 where τ_1_0 : CodingKey> (@thick τ_1_0.Type, @in_guaranteed τ_0_0) -> (@out KeyedDecodingContainer<τ_1_0>, @error Error), normal bb1, error bb5 // type-defs: %9; id: %13
+
+bb1(%14 : $()):                                   // Preds: bb0
+  %15 = metatype $@thin String.Type               // user: %21
+  %16 = metatype $@thin Student.CodingKeys.Type
+
+  // 分配一个 CodinggKeys 内存，将 name 的枚举值写入
+  %17 = enum $Student.CodingKeys, #Student.CodingKeys.name!enumelt // user: %19
+  %18 = alloc_stack $Student.CodingKeys           // users: %19, %23, %21, %79
+  store %17 to %18 : $*Student.CodingKeys         // id: %19
+
+  // 获取 KeyedDecodingContainer 中的 decode 方法
+  // function_ref KeyedDecodingContainer.decode(_:forKey:)
+  %20 = function_ref @$ss22KeyedDecodingContainerV6decode_6forKeyS2Sm_xtKF : $@convention(method) <τ_0_0 where τ_0_0 : CodingKey> (@thin String.Type, @in_guaranteed τ_0_0, @in_guaranteed KeyedDecodingContainer<τ_0_0>) -> (@owned String, @error Error) // user: %21
+
+  // 执行 KeyedDecodingContainer 中的 decode 方法，本质上是调用 __JSONDecoder 中的 decode 方法
+  try_apply %20<Student.CodingKeys>(%15, %18, %8) : $@convention(method) <τ_0_0 where τ_0_0 : CodingKey> (@thin String.Type, @in_guaranteed τ_0_0, @in_guaranteed KeyedDecodingContainer<τ_0_0>) -> (@owned String, @error Error), normal bb2, error bb6 // id: %21
+
+// %22                                            // users: %90, %84, %69, %66, %29, %28
+bb2(%22 : $String):                               // Preds: bb1
+  dealloc_stack %18 : $*Student.CodingKeys        // id: %23
+
+  // 将 name 的解码值写入 Student 对应的位置
+  %24 = begin_access [modify] [static] %3 : $*Student // users: %30, %25
+  %25 = struct_element_addr %24 : $*Student, #Student.name // user: %29
+  %26 = integer_literal $Builtin.Int3, 1          // user: %27
+  store %26 to %2 : $*Builtin.Int3                // id: %27
+  retain_value %22 : $String                      // id: %28
+  store %22 to %25 : $*String                     // id: %29
+  end_access %24 : $*Student                      // id: %30
+  %31 = metatype $@thin Int.Type                  // user: %37
+  %32 = metatype $@thin Student.CodingKeys.Type
+
+  // 分配一个 CodingKeys 内存，将 age 的枚举值写入
+  %33 = enum $Student.CodingKeys, #Student.CodingKeys.age!enumelt // user: %35
+  %34 = alloc_stack $Student.CodingKeys           // users: %35, %39, %37, %85
+  store %33 to %34 : $*Student.CodingKeys         // id: %35
+
+  // 获取 KeyedDecodingContainer 中的 decode 方法
+  // function_ref KeyedDecodingContainer.decode(_:forKey:)
+  %36 = function_ref @$ss22KeyedDecodingContainerV6decode_6forKeyS2im_xtKF : $@convention(method) <τ_0_0 where τ_0_0 : CodingKey> (@thin Int.Type, @in_guaranteed τ_0_0, @in_guaranteed KeyedDecodingContainer<τ_0_0>) -> (Int, @error Error) // user: %37
+
+  // 执行 KeyedDecodingContainer 中的 decode 方法，本质上是调用 __JSONDecoder 中的 decode 方法
+  try_apply %36<Student.CodingKeys>(%31, %34, %8) : $@convention(method) <τ_0_0 where τ_0_0 : CodingKey> (@thin Int.Type, @in_guaranteed τ_0_0, @in_guaranteed KeyedDecodingContainer<τ_0_0>) -> (Int, @error Error), normal bb3, error bb7 // id: %37
+
+// %38                                            // users: %42, %66
+bb3(%38 : $Int):                                  // Preds: bb2
+  dealloc_stack %34 : $*Student.CodingKeys        // id: %39
+  %40 = begin_access [modify] [static] %3 : $*Student // users: %43, %41
+  %41 = struct_element_addr %40 : $*Student, #Student.age // user: %42
+  store %38 to %41 : $*Int                        // id: %42
+  end_access %40 : $*Student                      // id: %43
+  %44 = alloc_stack $Address                      // users: %55, %63, %52, %92
+  %45 = metatype $@thin Address.Type
+  %46 = metatype $@thick Address.Type             // user: %52
+  %47 = metatype $@thin Student.CodingKeys.Type
+  %48 = enum $Student.CodingKeys, #Student.CodingKeys.address!enumelt // user: %50
+  %49 = alloc_stack $Student.CodingKeys           // users: %50, %54, %52, %91
+  store %48 to %49 : $*Student.CodingKeys         // id: %50
+  // function_ref KeyedDecodingContainer.decode<A>(_:forKey:)
+  %51 = function_ref @$ss22KeyedDecodingContainerV6decode_6forKeyqd__qd__m_xtKSeRd__lF : $@convention(method) <τ_0_0 where τ_0_0 : CodingKey><τ_1_0 where τ_1_0 : Decodable> (@thick τ_1_0.Type, @in_guaranteed τ_0_0, @in_guaranteed KeyedDecodingContainer<τ_0_0>) -> (@out τ_1_0, @error Error) // user: %52
+  try_apply %51<Student.CodingKeys, Address>(%44, %46, %49, %8) : $@convention(method) <τ_0_0 where τ_0_0 : CodingKey><τ_1_0 where τ_1_0 : Decodable> (@thick τ_1_0.Type, @in_guaranteed τ_0_0, @in_guaranteed KeyedDecodingContainer<τ_0_0>) -> (@out τ_1_0, @error Error), normal bb4, error bb8 // id: %52
+
+bb4(%53 : $()):                                   // Preds: bb3
+  dealloc_stack %49 : $*Student.CodingKeys        // id: %54
+  %55 = load %44 : $*Address                      // users: %68, %66, %61, %60
+  %56 = begin_access [modify] [static] %3 : $*Student // users: %62, %57
+  %57 = struct_element_addr %56 : $*Student, #Student.address // user: %61
+  %58 = integer_literal $Builtin.Int3, -3         // user: %59
+  store %58 to %2 : $*Builtin.Int3                // id: %59
+  retain_value %55 : $Address                     // id: %60
+  store %55 to %57 : $*Address                    // id: %61
+  end_access %56 : $*Student                      // id: %62
+  dealloc_stack %44 : $*Address                   // id: %63
+  destroy_addr %8 : $*KeyedDecodingContainer<Student.CodingKeys> // id: %64
+  dealloc_stack %8 : $*KeyedDecodingContainer<Student.CodingKeys> // id: %65
+  %66 = struct $Student (%22 : $String, %38 : $Int, %55 : $Address) // users: %74, %67
+  retain_value %66 : $Student                     // id: %67
+  release_value %55 : $Address                    // id: %68
+  release_value %22 : $String                     // id: %69
+  destroy_addr %0 : $*Decoder                     // id: %70
+  destroy_addr %3 : $*Student                     // id: %71
+  dealloc_stack %3 : $*Student                    // id: %72
+  dealloc_stack %2 : $*Builtin.Int3               // id: %73
+  return %66 : $Student                           // id: %74
+
+// %75                                            // user: %77
+bb5(%75 : $Error):                                // Preds: bb0
+  dealloc_stack %8 : $*KeyedDecodingContainer<Student.CodingKeys> // id: %76
+  br bb9(%75 : $Error)                            // id: %77
+
+// %78                                            // user: %82
+bb6(%78 : $Error):                                // Preds: bb1
+  dealloc_stack %18 : $*Student.CodingKeys        // id: %79
+  destroy_addr %8 : $*KeyedDecodingContainer<Student.CodingKeys> // id: %80
+  dealloc_stack %8 : $*KeyedDecodingContainer<Student.CodingKeys> // id: %81
+  br bb9(%78 : $Error)                            // id: %82
+
+// %83                                            // user: %88
+bb7(%83 : $Error):                                // Preds: bb2
+  release_value %22 : $String                     // id: %84
+  dealloc_stack %34 : $*Student.CodingKeys        // id: %85
+  destroy_addr %8 : $*KeyedDecodingContainer<Student.CodingKeys> // id: %86
+  dealloc_stack %8 : $*KeyedDecodingContainer<Student.CodingKeys> // id: %87
+  br bb9(%83 : $Error)                            // id: %88
+
+// %89                                            // user: %95
+bb8(%89 : $Error):                                // Preds: bb3
+  release_value %22 : $String                     // id: %90
+  dealloc_stack %49 : $*Student.CodingKeys        // id: %91
+  dealloc_stack %44 : $*Address                   // id: %92
+  destroy_addr %8 : $*KeyedDecodingContainer<Student.CodingKeys> // id: %93
+  dealloc_stack %8 : $*KeyedDecodingContainer<Student.CodingKeys> // id: %94
+  br bb9(%89 : $Error)                            // id: %95
+
+// %96                                            // user: %116
+bb9(%96 : $Error):                                // Preds: bb8 bb7 bb6 bb5
+  destroy_addr %0 : $*Decoder                     // id: %97
+  %98 = load %2 : $*Builtin.Int3                  // user: %99
+  %99 = builtin "trunc_Int3_Int1"(%98 : $Builtin.Int3) : $Builtin.Int1 // user: %100
+  cond_br %99, bb10, bb11                         // id: %100
+
+bb10:                                             // Preds: bb9
+  %101 = struct_element_addr %3 : $*Student, #Student.name // user: %102
+  destroy_addr %101 : $*String                    // id: %102
+  br bb12                                         // id: %103
+
+bb11:                                             // Preds: bb9
+  br bb12                                         // id: %104
+
+bb12:                                             // Preds: bb11 bb10
+  %105 = load %2 : $*Builtin.Int3                 // user: %107
+  %106 = integer_literal $Builtin.Int3, 1         // user: %107
+  %107 = builtin "lshr_Int3"(%105 : $Builtin.Int3, %106 : $Builtin.Int3) : $Builtin.Int3 // user: %108
+  %108 = builtin "trunc_Int3_Int1"(%107 : $Builtin.Int3) : $Builtin.Int1 // user: %109
+  cond_br %108, bb13, bb14                        // id: %109
+
+bb13:                                             // Preds: bb12
+  %110 = struct_element_addr %3 : $*Student, #Student.age // user: %111
+  destroy_addr %110 : $*Int                       // id: %111
+  br bb15                                         // id: %112
+
+bb14:                                             // Preds: bb12
+  br bb15                                         // id: %113
+
+bb15:                                             // Preds: bb14 bb13
+  dealloc_stack %3 : $*Student                    // id: %114
+  dealloc_stack %2 : $*Builtin.Int3               // id: %115
+  throw %96 : $Error                              // id: %116
+} // end sil function '$s7StudentAAV4fromABs7Decoder_p_tKcfC'
+
+// KeyedDecodingContainer.decode(_:forKey:)
+sil @$ss22KeyedDecodingContainerV6decode_6forKeyS2im_xtKF : $@convention(method) <τ_0_0 where τ_0_0 : CodingKey> (@thin Int.Type, @in_guaranteed τ_0_0, @in_guaranteed KeyedDecodingContainer<τ_0_0>) -> (Int, @error Error)
+
+// KeyedDecodingContainer.decode<A>(_:forKey:)
+sil @$ss22KeyedDecodingContainerV6decode_6forKeyqd__qd__m_xtKSeRd__lF : $@convention(method) <τ_0_0 where τ_0_0 : CodingKey><τ_1_0 where τ_1_0 : Decodable> (@thick τ_1_0.Type, @in_guaranteed τ_0_0, @in_guaranteed KeyedDecodingContainer<τ_0_0>) -> (@out τ_1_0, @error Error)
+
+// Student.encode(to:)
+sil hidden @$s7StudentAAV6encode2toys7Encoder_p_tKF : $@convention(method) (@in_guaranteed Encoder, @guaranteed Student) -> @error Error {
+// %0 "encoder"                                   // users: %6, %2
+// %1 "self"                                      // users: %35, %24, %11, %3
+bb0(%0 : $*Encoder, %1 : $Student):
+  debug_value_addr %0 : $*Encoder, let, name "encoder", argno 1 // id: %2
+  debug_value %1 : $Student, let, name "self", argno 2 // id: %3
+  debug_value undef : $Error, var, name "$error", argno 3 // id: %4
+
+  // 初始化 KeyedEncodingContainer 内存布局
+  %5 = alloc_stack $KeyedEncodingContainer<Student.CodingKeys>, var, name "container" // users: %52, %51, %74, %73, %66, %65, %60, %59, %10, %17, %29, %43
+
+  // 获取遵循 Encoder 协议的实体，即 __JSONEncoder
+  %6 = open_existential_addr immutable_access %0 : $*Encoder to $*@opened("563EEE00-301D-11EC-B195-AC87A33022EC") Encoder // users: %10, %10, %9
+  %7 = metatype $@thin Student.CodingKeys.Type
+  %8 = metatype $@thick Student.CodingKeys.Type   // user: %10
+
+  // 获取 __JSONEncoder 的 container 方法
+  %9 = witness_method $@opened("563EEE00-301D-11EC-B195-AC87A33022EC") Encoder, #Encoder.container : <Self where Self : Encoder><Key where Key : CodingKey> (Self) -> (Key.Type) -> KeyedEncodingContainer<Key>, %6 : $*@opened("563EEE00-301D-11EC-B195-AC87A33022EC") Encoder : $@convention(witness_method: Encoder) <τ_0_0 where τ_0_0 : Encoder><τ_1_0 where τ_1_0 : CodingKey> (@thick τ_1_0.Type, @in_guaranteed τ_0_0) -> @out KeyedEncodingContainer<τ_1_0> // type-defs: %6; user: %10
+
+  // 执行 __JSONEncoder 的 container 方法
+  %10 = apply %9<@opened("563EEE00-301D-11EC-B195-AC87A33022EC") Encoder, Student.CodingKeys>(%5, %8, %6) : $@convention(witness_method: Encoder) <τ_0_0 where τ_0_0 : Encoder><τ_1_0 where τ_1_0 : CodingKey> (@thick τ_1_0.Type, @in_guaranteed τ_0_0) -> @out KeyedEncodingContainer<τ_1_0> // type-defs: %6
+  %11 = struct_extract %1 : $Student, #Student.name // users: %58, %23, %19, %12
+  retain_value %11 : $String                      // id: %12
+  %13 = metatype $@thin Student.CodingKeys.Type
+
+  // 分配一个 CodingKeys 内存，将 name 的枚举值写入
+  %14 = enum $Student.CodingKeys, #Student.CodingKeys.name!enumelt // user: %16
+  %15 = alloc_stack $Student.CodingKeys           // users: %16, %22, %19, %57
+  store %14 to %15 : $*Student.CodingKeys         // id: %16
+  %17 = begin_access [modify] [static] %5 : $*KeyedEncodingContainer<Student.CodingKeys> // users: %21, %19, %56
+
+  // 获取 KeyedEncodingContainer 的 encode(_:forKey:) 方法
+  // function_ref KeyedEncodingContainer.encode(_:forKey:)
+  %18 = function_ref @$ss22KeyedEncodingContainerV6encode_6forKeyySS_xtKF : $@convention(method) <τ_0_0 where τ_0_0 : CodingKey> (@guaranteed String, @in_guaranteed τ_0_0, @inout KeyedEncodingContainer<τ_0_0>) -> @error Error // user: %19
+
+  // 执行 KeyedEncodingContainer 的 encode(_:forKey:) 方法
+  try_apply %18<Student.CodingKeys>(%11, %15, %17) : $@convention(method) <τ_0_0 where τ_0_0 : CodingKey> (@guaranteed String, @in_guaranteed τ_0_0, @inout KeyedEncodingContainer<τ_0_0>) -> @error Error, normal bb1, error bb4 // id: %19
+
+bb1(%20 : $()):                                   // Preds: bb0
+  end_access %17 : $*KeyedEncodingContainer<Student.CodingKeys> // id: %21
+  dealloc_stack %15 : $*Student.CodingKeys        // id: %22
+  release_value %11 : $String                     // id: %23
+  %24 = struct_extract %1 : $Student, #Student.age // user: %31
+  %25 = metatype $@thin Student.CodingKeys.Type
+  %26 = enum $Student.CodingKeys, #Student.CodingKeys.age!enumelt // user: %28
+  %27 = alloc_stack $Student.CodingKeys           // users: %28, %34, %31, %64
+  store %26 to %27 : $*Student.CodingKeys         // id: %28
+  %29 = begin_access [modify] [static] %5 : $*KeyedEncodingContainer<Student.CodingKeys> // users: %33, %31, %63
+  // function_ref KeyedEncodingContainer.encode(_:forKey:)
+  %30 = function_ref @$ss22KeyedEncodingContainerV6encode_6forKeyySi_xtKF : $@convention(method) <τ_0_0 where τ_0_0 : CodingKey> (Int, @in_guaranteed τ_0_0, @inout KeyedEncodingContainer<τ_0_0>) -> @error Error // user: %31
+  try_apply %30<Student.CodingKeys>(%24, %27, %29) : $@convention(method) <τ_0_0 where τ_0_0 : CodingKey> (Int, @in_guaranteed τ_0_0, @inout KeyedEncodingContainer<τ_0_0>) -> @error Error, normal bb2, error bb5 // id: %31
+
+bb2(%32 : $()):                                   // Preds: bb1
+  end_access %29 : $*KeyedEncodingContainer<Student.CodingKeys> // id: %33
+  dealloc_stack %27 : $*Student.CodingKeys        // id: %34
+  %35 = struct_extract %1 : $Student, #Student.address // users: %38, %36
+  retain_value %35 : $Address                     // id: %36
+  %37 = alloc_stack $Address                      // users: %38, %50, %49, %45, %72, %71
+  store %35 to %37 : $*Address                    // id: %38
+  %39 = metatype $@thin Student.CodingKeys.Type
+  %40 = enum $Student.CodingKeys, #Student.CodingKeys.address!enumelt // user: %42
+  %41 = alloc_stack $Student.CodingKeys           // users: %42, %48, %45, %70
+  store %40 to %41 : $*Student.CodingKeys         // id: %42
+  %43 = begin_access [modify] [static] %5 : $*KeyedEncodingContainer<Student.CodingKeys> // users: %47, %45, %69
+  // function_ref KeyedEncodingContainer.encode<A>(_:forKey:)
+  %44 = function_ref @$ss22KeyedEncodingContainerV6encode_6forKeyyqd___xtKSERd__lF : $@convention(method) <τ_0_0 where τ_0_0 : CodingKey><τ_1_0 where τ_1_0 : Encodable> (@in_guaranteed τ_1_0, @in_guaranteed τ_0_0, @inout KeyedEncodingContainer<τ_0_0>) -> @error Error // user: %45
+  try_apply %44<Student.CodingKeys, Address>(%37, %41, %43) : $@convention(method) <τ_0_0 where τ_0_0 : CodingKey><τ_1_0 where τ_1_0 : Encodable> (@in_guaranteed τ_1_0, @in_guaranteed τ_0_0, @inout KeyedEncodingContainer<τ_0_0>) -> @error Error, normal bb3, error bb6 // id: %45
+
+bb3(%46 : $()):                                   // Preds: bb2
+  end_access %43 : $*KeyedEncodingContainer<Student.CodingKeys> // id: %47
+  dealloc_stack %41 : $*Student.CodingKeys        // id: %48
+  destroy_addr %37 : $*Address                    // id: %49
+  dealloc_stack %37 : $*Address                   // id: %50
+  destroy_addr %5 : $*KeyedEncodingContainer<Student.CodingKeys> // id: %51
+  dealloc_stack %5 : $*KeyedEncodingContainer<Student.CodingKeys> // id: %52
+  %53 = tuple ()                                  // user: %54
+  return %53 : $()                                // id: %54
+
+// %55                                            // user: %61
+bb4(%55 : $Error):                                // Preds: bb0
+  end_access %17 : $*KeyedEncodingContainer<Student.CodingKeys> // id: %56
+  dealloc_stack %15 : $*Student.CodingKeys        // id: %57
+  release_value %11 : $String                     // id: %58
+  destroy_addr %5 : $*KeyedEncodingContainer<Student.CodingKeys> // id: %59
+  dealloc_stack %5 : $*KeyedEncodingContainer<Student.CodingKeys> // id: %60
+  br bb7(%55 : $Error)                            // id: %61
+
+// %62                                            // user: %67
+bb5(%62 : $Error):                                // Preds: bb1
+  end_access %29 : $*KeyedEncodingContainer<Student.CodingKeys> // id: %63
+  dealloc_stack %27 : $*Student.CodingKeys        // id: %64
+  destroy_addr %5 : $*KeyedEncodingContainer<Student.CodingKeys> // id: %65
+  dealloc_stack %5 : $*KeyedEncodingContainer<Student.CodingKeys> // id: %66
+  br bb7(%62 : $Error)                            // id: %67
+
+// %68                                            // user: %75
+bb6(%68 : $Error):                                // Preds: bb2
+  end_access %43 : $*KeyedEncodingContainer<Student.CodingKeys> // id: %69
+  dealloc_stack %41 : $*Student.CodingKeys        // id: %70
+  destroy_addr %37 : $*Address                    // id: %71
+  dealloc_stack %37 : $*Address                   // id: %72
+  destroy_addr %5 : $*KeyedEncodingContainer<Student.CodingKeys> // id: %73
+  dealloc_stack %5 : $*KeyedEncodingContainer<Student.CodingKeys> // id: %74
+  br bb7(%68 : $Error)                            // id: %75
+
+// %76                                            // user: %77
+bb7(%76 : $Error):                                // Preds: bb6 bb5 bb4
+  throw %76 : $Error                              // id: %77
+} // end sil function '$s7StudentAAV6encode2toys7Encoder_p_tKF'
+
+// KeyedEncodingContainer.encode(_:forKey:)
+sil @$ss22KeyedEncodingContainerV6encode_6forKeyySi_xtKF : $@convention(method) <τ_0_0 where τ_0_0 : CodingKey> (Int, @in_guaranteed τ_0_0, @inout KeyedEncodingContainer<τ_0_0>) -> @error Error
+
+// KeyedEncodingContainer.encode<A>(_:forKey:)
+sil @$ss22KeyedEncodingContainerV6encode_6forKeyyqd___xtKSERd__lF : $@convention(method) <τ_0_0 where τ_0_0 : CodingKey><τ_1_0 where τ_1_0 : Encodable> (@in_guaranteed τ_1_0, @in_guaranteed τ_0_0, @inout KeyedEncodingContainer<τ_0_0>) -> @error Error
+
+// protocol witness for Decodable.init(from:) in conformance Student
+sil private [transparent] [thunk] @$s7StudentAAVSeAASe4fromxs7Decoder_p_tKcfCTW : $@convention(witness_method: Decodable) (@in Decoder, @thick Student.Type) -> (@out Student, @error Error) {
+// %0                                             // user: %7
+// %1                                             // user: %5
+bb0(%0 : $*Student, %1 : $*Decoder, %2 : $@thick Student.Type):
+  %3 = metatype $@thin Student.Type               // user: %5
+  // function_ref Student.init(from:)
+  %4 = function_ref @$s7StudentAAV4fromABs7Decoder_p_tKcfC : $@convention(method) (@in Decoder, @thin Student.Type) -> (@owned Student, @error Error) // user: %5
+  try_apply %4(%1, %3) : $@convention(method) (@in Decoder, @thin Student.Type) -> (@owned Student, @error Error), normal bb1, error bb2 // id: %5
+
+// %6                                             // user: %7
+bb1(%6 : $Student):                               // Preds: bb0
+  store %6 to %0 : $*Student                      // id: %7
+  %8 = tuple ()                                   // user: %9
+  return %8 : $()                                 // id: %9
+
+// %10                                            // user: %11
+bb2(%10 : $Error):                                // Preds: bb0
+  throw %10 : $Error                              // id: %11
+} // end sil function '$s7StudentAAVSeAASe4fromxs7Decoder_p_tKcfCTW'
+
+// protocol witness for Encodable.encode(to:) in conformance Student
+sil private [transparent] [thunk] @$s7StudentAAVSEAASE6encode2toys7Encoder_p_tKFTW : $@convention(witness_method: Encodable) (@in_guaranteed Encoder, @in_guaranteed Student) -> @error Error {
+// %0                                             // user: %4
+// %1                                             // user: %2
+bb0(%0 : $*Encoder, %1 : $*Student):
+  %2 = load %1 : $*Student                        // user: %4
+  // function_ref Student.encode(to:)
+  %3 = function_ref @$s7StudentAAV6encode2toys7Encoder_p_tKF : $@convention(method) (@in_guaranteed Encoder, @guaranteed Student) -> @error Error // user: %4
+  try_apply %3(%0, %2) : $@convention(method) (@in_guaranteed Encoder, @guaranteed Student) -> @error Error, normal bb1, error bb2 // id: %4
+
+bb1(%5 : $()):                                    // Preds: bb0
+  %6 = tuple ()                                   // user: %7
+  return %6 : $()                                 // id: %7
+
+// %8                                             // user: %9
+bb2(%8 : $Error):                                 // Preds: bb0
+  throw %8 : $Error                               // id: %9
+} // end sil function '$s7StudentAAVSEAASE6encode2toys7Encoder_p_tKFTW'
+
+// static Int.== infix(_:_:)
+sil public_external [transparent] [serialized] @$sSi2eeoiySbSi_SitFZ : $@convention(method) (Int, Int, @thin Int.Type) -> Bool {
+// %0                                             // user: %3
+// %1                                             // user: %4
+bb0(%0 : $Int, %1 : $Int, %2 : $@thin Int.Type):
+  %3 = struct_extract %0 : $Int, #Int._value      // user: %5
+  %4 = struct_extract %1 : $Int, #Int._value      // user: %5
+  %5 = builtin "cmp_eq_Int64"(%3 : $Builtin.Int64, %4 : $Builtin.Int64) : $Builtin.Int1 // user: %6
+  %6 = struct $Bool (%5 : $Builtin.Int1)          // user: %7
+  return %6 : $Bool                               // id: %7
+} // end sil function '$sSi2eeoiySbSi_SitFZ'
+
+// _hashValue<A>(for:)
+sil [serialized] [always_inline] @$ss10_hashValue3forSix_tSHRzlF : $@convention(thin) <τ_0_0 where τ_0_0 : Hashable> (@in_guaranteed τ_0_0) -> Int
+
+// Hasher.combine<A>(_:)
+sil [serialized] [always_inline] @$ss6HasherV7combineyyxSHRzlF : $@convention(method) <τ_0_0 where τ_0_0 : Hashable> (@in_guaranteed τ_0_0, @inout Hasher) -> ()
+
+// protocol witness for static Equatable.== infix(_:_:) in conformance String
+sil shared_external [transparent] [serialized] [thunk] [always_inline] @$sSSSQsSQ2eeoiySbx_xtFZTW : $@convention(witness_method: Equatable) (@in_guaranteed String, @in_guaranteed String, @thick String.Type) -> Bool {
+// %0                                             // user: %3
+// %1                                             // user: %4
+bb0(%0 : $*String, %1 : $*String, %2 : $@thick String.Type):
+  %3 = load %0 : $*String                         // user: %7
+  %4 = load %1 : $*String                         // user: %7
+  %5 = metatype $@thin String.Type                // user: %7
+  // function_ref static String.== infix(_:_:)
+  %6 = function_ref @$sSS2eeoiySbSS_SStFZ : $@convention(method) (@guaranteed String, @guaranteed String, @thin String.Type) -> Bool // user: %7
+  %7 = apply %6(%3, %4, %5) : $@convention(method) (@guaranteed String, @guaranteed String, @thin String.Type) -> Bool // user: %8
+  return %7 : $Bool                               // id: %8
+} // end sil function '$sSSSQsSQ2eeoiySbx_xtFZTW'
+
+// static String.== infix(_:_:)
+sil [serialized] [always_inline] [readonly] [_semantics "string.equals"] @$sSS2eeoiySbSS_SStFZ : $@convention(method) (@guaranteed String, @guaranteed String, @thin String.Type) -> Bool
+
+// protocol witness for static Equatable.== infix(_:_:) in conformance Int
+sil shared_external [transparent] [serialized] [thunk] @$sSiSQsSQ2eeoiySbx_xtFZTW : $@convention(witness_method: Equatable) (@in_guaranteed Int, @in_guaranteed Int, @thick Int.Type) -> Bool {
+// %0                                             // user: %3
+// %1                                             // user: %5
+bb0(%0 : $*Int, %1 : $*Int, %2 : $@thick Int.Type):
+  %3 = struct_element_addr %0 : $*Int, #Int._value // user: %4
+  %4 = load %3 : $*Builtin.Int64                  // user: %7
+  %5 = struct_element_addr %1 : $*Int, #Int._value // user: %6
+  %6 = load %5 : $*Builtin.Int64                  // user: %7
+  %7 = builtin "cmp_eq_Int64"(%4 : $Builtin.Int64, %6 : $Builtin.Int64) : $Builtin.Int1 // user: %8
+  %8 = struct $Bool (%7 : $Builtin.Int1)          // user: %11
+  br bb1                                          // id: %9
+
+bb1:                                              // Preds: bb0
+  br bb2                                          // id: %10
+
+bb2:                                              // Preds: bb1
+  return %8 : $Bool                               // id: %11
+} // end sil function '$sSiSQsSQ2eeoiySbx_xtFZTW'
+
+sil_witness_table private Address.CodingKeys: Equatable module Student {
+  method #Equatable."==": <Self where Self : Equatable> (Self.Type) -> (Self, Self) -> Bool : @$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLOSQAASQ2eeoiySbx_xtFZTW	// protocol witness for static Equatable.== infix(_:_:) in conformance Address.CodingKeys
+}
+
+sil_witness_table private Address.CodingKeys: Hashable module Student {
+  base_protocol Equatable: Address.CodingKeys: Equatable module Student
+  method #Hashable.hashValue!getter: <Self where Self : Hashable> (Self) -> () -> Int : @$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLOSHAASH9hashValueSivgTW	// protocol witness for Hashable.hashValue.getter in conformance Address.CodingKeys
+  method #Hashable.hash: <Self where Self : Hashable> (Self) -> (inout Hasher) -> () : @$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLOSHAASH4hash4intoys6HasherVz_tFTW	// protocol witness for Hashable.hash(into:) in conformance Address.CodingKeys
+  method #Hashable._rawHashValue: <Self where Self : Hashable> (Self) -> (Int) -> Int : @$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLOSHAASH13_rawHashValue4seedS2i_tFTW	// protocol witness for Hashable._rawHashValue(seed:) in conformance Address.CodingKeys
+}
+
+sil_witness_table private Address.CodingKeys: CodingKey module Student {
+  base_protocol CustomDebugStringConvertible: Address.CodingKeys: CustomDebugStringConvertible module Student
+  base_protocol CustomStringConvertible: Address.CodingKeys: CustomStringConvertible module Student
+  method #CodingKey.stringValue!getter: <Self where Self : CodingKey> (Self) -> () -> String : @$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLOs0C3KeyAAsAGP11stringValueSSvgTW	// protocol witness for CodingKey.stringValue.getter in conformance Address.CodingKeys
+  method #CodingKey.init!allocator: <Self where Self : CodingKey> (Self.Type) -> (String) -> Self? : @$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLOs0C3KeyAAsAGP11stringValuexSgSS_tcfCTW	// protocol witness for CodingKey.init(stringValue:) in conformance Address.CodingKeys
+  method #CodingKey.intValue!getter: <Self where Self : CodingKey> (Self) -> () -> Int? : @$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLOs0C3KeyAAsAGP8intValueSiSgvgTW	// protocol witness for CodingKey.intValue.getter in conformance Address.CodingKeys
+  method #CodingKey.init!allocator: <Self where Self : CodingKey> (Self.Type) -> (Int) -> Self? : @$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLOs0C3KeyAAsAGP8intValuexSgSi_tcfCTW	// protocol witness for CodingKey.init(intValue:) in conformance Address.CodingKeys
+}
+
+sil_witness_table private Address.CodingKeys: CustomDebugStringConvertible module Student {
+  method #CustomDebugStringConvertible.debugDescription!getter: <Self where Self : CustomDebugStringConvertible> (Self) -> () -> String : @$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLOs28CustomDebugStringConvertibleAAsAGP16debugDescriptionSSvgTW	// protocol witness for CustomDebugStringConvertible.debugDescription.getter in conformance Address.CodingKeys
+}
+
+sil_witness_table private Address.CodingKeys: CustomStringConvertible module Student {
+  method #CustomStringConvertible.description!getter: <Self where Self : CustomStringConvertible> (Self) -> () -> String : @$s7Student7AddressV10CodingKeys33_4F112D2552B9BBAEAB8B5896B9985E79LLOs23CustomStringConvertibleAAsAGP11descriptionSSvgTW	// protocol witness for CustomStringConvertible.description.getter in conformance Address.CodingKeys
+}
+
+sil_witness_table hidden Address: Decodable module Student {
+  method #Decodable.init!allocator: <Self where Self : Decodable> (Self.Type) -> (Decoder) throws -> Self : @$s7Student7AddressVSeAASe4fromxs7Decoder_p_tKcfCTW	// protocol witness for Decodable.init(from:) in conformance Address
+}
+
+sil_witness_table hidden Address: Encodable module Student {
+  method #Encodable.encode: <Self where Self : Encodable> (Self) -> (Encoder) throws -> () : @$s7Student7AddressVSEAASE6encode2toys7Encoder_p_tKFTW	// protocol witness for Encodable.encode(to:) in conformance Address
+}
+
+sil_witness_table hidden Student.CodingKeys: Equatable module Student {
+  method #Equatable."==": <Self where Self : Equatable> (Self.Type) -> (Self, Self) -> Bool : @$s7StudentAAV10CodingKeysOSQAASQ2eeoiySbx_xtFZTW	// protocol witness for static Equatable.== infix(_:_:) in conformance Student.CodingKeys
+}
+
+sil_witness_table hidden Student.CodingKeys: Hashable module Student {
+  base_protocol Equatable: Student.CodingKeys: Equatable module Student
+  method #Hashable.hashValue!getter: <Self where Self : Hashable> (Self) -> () -> Int : @$s7StudentAAV10CodingKeysOSHAASH9hashValueSivgTW	// protocol witness for Hashable.hashValue.getter in conformance Student.CodingKeys
+  method #Hashable.hash: <Self where Self : Hashable> (Self) -> (inout Hasher) -> () : @$s7StudentAAV10CodingKeysOSHAASH4hash4intoys6HasherVz_tFTW	// protocol witness for Hashable.hash(into:) in conformance Student.CodingKeys
+  method #Hashable._rawHashValue: <Self where Self : Hashable> (Self) -> (Int) -> Int : @$s7StudentAAV10CodingKeysOSHAASH13_rawHashValue4seedS2i_tFTW	// protocol witness for Hashable._rawHashValue(seed:) in conformance Student.CodingKeys
+}
+
+sil_witness_table hidden Student.CodingKeys: RawRepresentable module Student {
+  associated_type RawValue: String
+  method #RawRepresentable.init!allocator: <Self where Self : RawRepresentable> (Self.Type) -> (Self.RawValue) -> Self? : @$s7StudentAAV10CodingKeysOSYAASY8rawValuexSg03RawE0Qz_tcfCTW	// protocol witness for RawRepresentable.init(rawValue:) in conformance Student.CodingKeys
+  method #RawRepresentable.rawValue!getter: <Self where Self : RawRepresentable> (Self) -> () -> Self.RawValue : @$s7StudentAAV10CodingKeysOSYAASY8rawValue03RawE0QzvgTW	// protocol witness for RawRepresentable.rawValue.getter in conformance Student.CodingKeys
+}
+
+sil_witness_table hidden Student.CodingKeys: CodingKey module Student {
+  base_protocol CustomDebugStringConvertible: Student.CodingKeys: CustomDebugStringConvertible module Student
+  base_protocol CustomStringConvertible: Student.CodingKeys: CustomStringConvertible module Student
+  method #CodingKey.stringValue!getter: <Self where Self : CodingKey> (Self) -> () -> String : @$s7StudentAAV10CodingKeysOs0B3KeyAAsAEP11stringValueSSvgTW	// protocol witness for CodingKey.stringValue.getter in conformance Student.CodingKeys
+  method #CodingKey.init!allocator: <Self where Self : CodingKey> (Self.Type) -> (String) -> Self? : @$s7StudentAAV10CodingKeysOs0B3KeyAAsAEP11stringValuexSgSS_tcfCTW	// protocol witness for CodingKey.init(stringValue:) in conformance Student.CodingKeys
+  method #CodingKey.intValue!getter: <Self where Self : CodingKey> (Self) -> () -> Int? : @$s7StudentAAV10CodingKeysOs0B3KeyAAsAEP8intValueSiSgvgTW	// protocol witness for CodingKey.intValue.getter in conformance Student.CodingKeys
+  method #CodingKey.init!allocator: <Self where Self : CodingKey> (Self.Type) -> (Int) -> Self? : @$s7StudentAAV10CodingKeysOs0B3KeyAAsAEP8intValuexSgSi_tcfCTW	// protocol witness for CodingKey.init(intValue:) in conformance Student.CodingKeys
+}
+
+sil_witness_table hidden Student.CodingKeys: CustomDebugStringConvertible module Student {
+  method #CustomDebugStringConvertible.debugDescription!getter: <Self where Self : CustomDebugStringConvertible> (Self) -> () -> String : @$s7StudentAAV10CodingKeysOs28CustomDebugStringConvertibleAAsAEP16debugDescriptionSSvgTW	// protocol witness for CustomDebugStringConvertible.debugDescription.getter in conformance Student.CodingKeys
+}
+
+sil_witness_table hidden Student.CodingKeys: CustomStringConvertible module Student {
+  method #CustomStringConvertible.description!getter: <Self where Self : CustomStringConvertible> (Self) -> () -> String : @$s7StudentAAV10CodingKeysOs23CustomStringConvertibleAAsAEP11descriptionSSvgTW	// protocol witness for CustomStringConvertible.description.getter in conformance Student.CodingKeys
+}
+
+sil_witness_table hidden Student: Decodable module Student {
+  method #Decodable.init!allocator: <Self where Self : Decodable> (Self.Type) -> (Decoder) throws -> Self : @$s7StudentAAVSeAASe4fromxs7Decoder_p_tKcfCTW	// protocol witness for Decodable.init(from:) in conformance Student
+}
+
+sil_witness_table hidden Student: Encodable module Student {
+  method #Encodable.encode: <Self where Self : Encodable> (Self) -> (Encoder) throws -> () : @$s7StudentAAVSEAASE6encode2toys7Encoder_p_tKFTW	// protocol witness for Encodable.encode(to:) in conformance Student
+}
+
+sil_witness_table public_external [serialized] String: Equatable module Swift {
+  method #Equatable."==": <Self where Self : Equatable> (Self.Type) -> (Self, Self) -> Bool : @$sSSSQsSQ2eeoiySbx_xtFZTW	// protocol witness for static Equatable.== infix(_:_:) in conformance String
+}
+
+sil_witness_table public_external [serialized] Int: Equatable module Swift {
+  method #Equatable."==": <Self where Self : Equatable> (Self.Type) -> (Self, Self) -> Bool : @$sSiSQsSQ2eeoiySbx_xtFZTW	// protocol witness for static Equatable.== infix(_:_:) in conformance Int
+}
+
+
+
+// Mappings from '#fileID' to '#filePath':
+//   'Student/Student.swift' => 'Student.swift'
+
+
